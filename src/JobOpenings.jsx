@@ -335,7 +335,7 @@ export default function JobOpenings() {
   return (
     <div style={{ minHeight: "100vh", background: "#07070f", color: "#e0e0e0", fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
       {/* Top bar */}
-      <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 16 }}>
+      <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
         <div>
           <div style={{ fontSize: 11, color: "#00e5ff", fontFamily: "monospace", letterSpacing: "0.12em" }}>LIVE JOB INTELLIGENCE — MAY 2026</div>
           <div style={{ fontSize: 18, fontWeight: 800, color: "#fff" }}>DEEBISHAA S — Real Job Openings Report</div>
@@ -348,7 +348,7 @@ export default function JobOpenings() {
       </div>
 
       {/* Tabs */}
-      <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "0 24px", display: "flex", gap: 4, overflowX: "auto" }}>
+      <div style={{ background: "#0d0d1a", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "0 24px", display: "flex", gap: 4, overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
         {tabs.map(t => (
           <button key={t.id} onClick={() => setActive(t.id)} style={{
             background: active === t.id ? "rgba(0,229,255,0.1)" : "transparent",

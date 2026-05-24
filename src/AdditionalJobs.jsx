@@ -217,46 +217,51 @@ export default function AdditionalJobs() {
             Showing {filtered.length} opening{filtered.length !== 1 ? "s" : ""} — Priority = apply today. Click Apply to open job portal.
           </div>
 
-          {/* Table Header */}
-          <div style={{ display: "grid", gridTemplateColumns: "36px 1fr 1fr 90px 80px 70px 70px", gap: 8, padding: "8px 12px", background: "#0f172a", borderRadius: 8, marginBottom: 6, fontSize: 11, color: "#64748b", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>
-            <span>#</span><span>Company</span><span>Role</span><span>Location</span><span>Salary</span><span>Match</span><span>Apply</span>
-          </div>
-
-          {/* Rows */}
-          {filtered.map((j) => (
-            <div
-              key={j.num}
-              style={{
-                display: "grid", gridTemplateColumns: "36px 1fr 1fr 90px 80px 70px 70px",
-                gap: 8, padding: "10px 12px",
-                background: j.match >= 88 ? "rgba(34,197,94,0.06)" : "#1e293b",
-                border: `1px solid ${j.match >= 88 ? "rgba(34,197,94,0.2)" : "#334155"}`,
-                borderRadius: 8, marginBottom: 6, alignItems: "center", fontSize: 12,
-              }}
-            >
-              <span style={{ color: "#64748b", fontWeight: 700 }}>{j.num}</span>
-              <div>
-                <div style={{ fontWeight: 700, color: "#f1f5f9", fontSize: 13 }}>{j.company}</div>
-                <span style={{ fontSize: 10, padding: "1px 6px", borderRadius: 4, background: "#0f172a", color: "#64748b" }}>{j.type}</span>
+          {/* Table Container */}
+          <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch", paddingBottom: 8 }}>
+            <div style={{ minWidth: 700 }}>
+              {/* Table Header */}
+              <div style={{ display: "grid", gridTemplateColumns: "36px 1fr 1fr 90px 80px 70px 70px", gap: 8, padding: "8px 12px", background: "#0f172a", borderRadius: 8, marginBottom: 6, fontSize: 11, color: "#64748b", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>
+                <span>#</span><span>Company</span><span>Role</span><span>Location</span><span>Salary</span><span>Match</span><span>Apply</span>
               </div>
-              <span style={{ color: "#cbd5e1" }}>{j.role}</span>
-              <span style={{ color: "#94a3b8", fontSize: 11 }}>{j.location}</span>
-              <span style={{ color: "#22d3ee", fontWeight: 600, fontSize: 12 }}>{j.salary}</span>
-              <MatchBar match={j.match} />
-              <a
-                href={j.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  padding: "4px 10px", borderRadius: 6, background: "#3b82f6", color: "#fff",
-                  fontSize: 11, fontWeight: 700, textDecoration: "none", textAlign: "center",
-                  display: "inline-block",
-                }}
-              >
-                Apply ↗
-              </a>
+
+              {/* Rows */}
+              {filtered.map((j) => (
+                <div
+                  key={j.num}
+                  style={{
+                    display: "grid", gridTemplateColumns: "36px 1fr 1fr 90px 80px 70px 70px",
+                    gap: 8, padding: "10px 12px",
+                    background: j.match >= 88 ? "rgba(34,197,94,0.06)" : "#1e293b",
+                    border: `1px solid ${j.match >= 88 ? "rgba(34,197,94,0.2)" : "#334155"}`,
+                    borderRadius: 8, marginBottom: 6, alignItems: "center", fontSize: 12,
+                  }}
+                >
+                  <span style={{ color: "#64748b", fontWeight: 700 }}>{j.num}</span>
+                  <div>
+                    <div style={{ fontWeight: 700, color: "#f1f5f9", fontSize: 13 }}>{j.company}</div>
+                    <span style={{ fontSize: 10, padding: "1px 6px", borderRadius: 4, background: "#0f172a", color: "#64748b" }}>{j.type}</span>
+                  </div>
+                  <span style={{ color: "#cbd5e1" }}>{j.role}</span>
+                  <span style={{ color: "#94a3b8", fontSize: 11 }}>{j.location}</span>
+                  <span style={{ color: "#22d3ee", fontWeight: 600, fontSize: 12 }}>{j.salary}</span>
+                  <MatchBar match={j.match} />
+                  <a
+                    href={j.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      padding: "4px 10px", borderRadius: 6, background: "#3b82f6", color: "#fff",
+                      fontSize: 11, fontWeight: 700, textDecoration: "none", textAlign: "center",
+                      display: "inline-block",
+                    }}
+                  >
+                    Apply ↗
+                  </a>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </>
       )}
 

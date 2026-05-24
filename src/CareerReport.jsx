@@ -762,38 +762,84 @@ export default function CareerReport() {
   const current = data[active];
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#0a0a0f",
-        fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
-        color: "#e8e8e8",
-        display: "flex",
-      }}
-    >
+    <>
+      <style>{`
+        .career-container {
+          min-height: 100vh;
+          background: #0a0a0f;
+          font-family: 'DM Sans', 'Segoe UI', sans-serif;
+          color: #e8e8e8;
+          display: flex;
+          flex-direction: row;
+        }
+        .career-sidebar {
+          width: 220px;
+          flex-shrink: 0;
+          background: #0f0f18;
+          border-right: 1px solid rgba(255,255,255,0.07);
+          display: flex;
+          flex-direction: column;
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          overflow-y: auto;
+        }
+        .career-sidebar-header {
+          padding: 24px 16px 20px;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .career-nav {
+          padding: 12px 8px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+        .career-content {
+          flex: 1;
+          padding: 40px;
+          max-width: 900px;
+        }
+        @media (max-width: 768px) {
+          .career-container {
+            flex-direction: column;
+          }
+          .career-sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-right: none;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+          }
+          .career-sidebar-header {
+            padding: 16px;
+          }
+          .career-nav {
+            flex-direction: row;
+            overflow-x: auto;
+            padding: 12px 16px;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+          }
+          .career-nav button {
+            flex-shrink: 0;
+            margin-bottom: 0 !important;
+            margin-right: 8px;
+          }
+          .career-content {
+            padding: 20px 16px;
+          }
+        }
+      `}</style>
+    <div className="career-container">
       {/* Sidebar */}
-      <div
-        style={{
-          width: "220px",
-          flexShrink: 0,
-          background: "#0f0f18",
-          borderRight: "1px solid rgba(255,255,255,0.07)",
-          padding: "24px 0",
-          display: "flex",
-          flexDirection: "column",
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-          overflowY: "auto",
-        }}
-      >
-        <div style={{ padding: "0 16px 20px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      <div className="career-sidebar">
+        <div className="career-sidebar-header">
           <div style={{ fontSize: "13px", fontWeight: "800", color: "#00e5ff", letterSpacing: "0.1em", fontFamily: "'Space Mono', monospace" }}>
             DEEBISHAA S
           </div>
           <div style={{ fontSize: "10px", color: "#666", marginTop: "4px" }}>Career Intelligence Report</div>
         </div>
-        <nav style={{ padding: "12px 8px", flex: 1 }}>
+        <nav className="career-nav">
           {sections.map((s) => (
             <button
               key={s.id}
@@ -821,7 +867,7 @@ export default function CareerReport() {
       </div>
 
       {/* Main Content */}
-      <div style={{ flex: 1, padding: "32px 36px", overflowY: "auto", maxHeight: "100vh" }}>
+      <div className="career-content" style={{ overflowY: "auto", maxHeight: "100vh" }}>
         {/* Header */}
         <div style={{ marginBottom: "28px" }}>
           <div
@@ -860,6 +906,7 @@ export default function CareerReport() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 

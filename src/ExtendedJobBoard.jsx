@@ -248,80 +248,84 @@ export default function ExtendedJobBoard() {
         {sector !== "All Sectors" && <span style={{color:"#58a6ff"}}> · {sector}</span>}
       </div>
 
-      {/* Column headers */}
-      <div style={{
-        display:"grid", gridTemplateColumns:"44px 28px 1fr 1fr 100px 80px 90px 64px",
-        gap:0, padding:"8px 24px", borderBottom:"1px solid #161b22",
-        fontSize:10, color:"#484f58", letterSpacing:1.5, textTransform:"uppercase",
-        fontWeight:500,
-      }}>
-        <span>#</span><span></span><span>COMPANY</span><span>ROLE</span><span>LOCATION</span><span>SALARY</span><span>DIFFICULTY</span><span>APPLY</span>
-      </div>
+      <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch", paddingBottom: 8 }}>
+        <div style={{ minWidth: 800 }}>
+          {/* Column headers */}
+          <div style={{
+            display:"grid", gridTemplateColumns:"44px 28px 1fr 1fr 100px 80px 90px 64px",
+            gap:0, padding:"8px 24px", borderBottom:"1px solid #161b22",
+            fontSize:10, color:"#484f58", letterSpacing:1.5, textTransform:"uppercase",
+            fontWeight:500,
+          }}>
+            <span>#</span><span></span><span>COMPANY</span><span>ROLE</span><span>LOCATION</span><span>SALARY</span><span>DIFFICULTY</span><span>APPLY</span>
+          </div>
 
-      {/* Job rows */}
-      <div>
-        {filtered.map((j, i) => {
-          const c = DIFF[j.level];
-          return (
-            <div key={j.num} className="job-row fade-up" style={{
-              display:"grid",
-              gridTemplateColumns:"44px 28px 1fr 1fr 100px 80px 90px 64px",
-              gap:0,
-              padding:"11px 24px",
-              borderBottom:"1px solid #0d1117",
-              background: i % 2 === 0 ? "#0a0e18" : "#080c14",
-              alignItems:"center",
-              animationDelay:`${Math.min(i * 18, 400)}ms`,
-              cursor:"default",
-            }}>
-              {/* # */}
-              <span style={{fontSize:11,color:"#30363d",fontWeight:500}}>{j.num}</span>
+          {/* Job rows */}
+          <div>
+            {filtered.map((j, i) => {
+              const c = DIFF[j.level];
+              return (
+                <div key={j.num} className="job-row fade-up" style={{
+                  display:"grid",
+                  gridTemplateColumns:"44px 28px 1fr 1fr 100px 80px 90px 64px",
+                  gap:0,
+                  padding:"11px 24px",
+                  borderBottom:"1px solid #0d1117",
+                  background: i % 2 === 0 ? "#0a0e18" : "#080c14",
+                  alignItems:"center",
+                  animationDelay:`${Math.min(i * 18, 400)}ms`,
+                  cursor:"default",
+                }}>
+                  {/* # */}
+                  <span style={{fontSize:11,color:"#30363d",fontWeight:500}}>{j.num}</span>
 
-              {/* Match dot */}
-              <div style={{
-                width:8, height:8, borderRadius:"50%",
-                background: j.match >= 88 ? "#22c55e" : j.match >= 75 ? "#f59e0b" : "#6e7681",
-                boxShadow: j.match >= 88 ? "0 0 6px #22c55e88" : "none",
-              }}/>
+                  {/* Match dot */}
+                  <div style={{
+                    width:8, height:8, borderRadius:"50%",
+                    background: j.match >= 88 ? "#22c55e" : j.match >= 75 ? "#f59e0b" : "#6e7681",
+                    boxShadow: j.match >= 88 ? "0 0 6px #22c55e88" : "none",
+                  }}/>
 
-              {/* Company */}
-              <div>
-                <div style={{fontSize:13,fontWeight:500,color:"#e6edf3",lineHeight:1.2}}>{j.company}</div>
-                <div style={{fontSize:10,color:"#484f58",marginTop:2,letterSpacing:0.5}}>{j.type} · {j.match}% match</div>
-              </div>
+                  {/* Company */}
+                  <div>
+                    <div style={{fontSize:13,fontWeight:500,color:"#e6edf3",lineHeight:1.2}}>{j.company}</div>
+                    <div style={{fontSize:10,color:"#484f58",marginTop:2,letterSpacing:0.5}}>{j.type} · {j.match}% match</div>
+                  </div>
 
-              {/* Role */}
-              <span style={{fontSize:12,color:"#8b949e",paddingRight:8}}>{j.role}</span>
+                  {/* Role */}
+                  <span style={{fontSize:12,color:"#8b949e",paddingRight:8}}>{j.role}</span>
 
-              {/* Location */}
-              <span style={{fontSize:11,color:"#6e7681"}}>{j.location}</span>
+                  {/* Location */}
+                  <span style={{fontSize:11,color:"#6e7681"}}>{j.location}</span>
 
-              {/* Salary */}
-              <span style={{fontSize:12,color:"#58a6ff",fontWeight:500}}>{j.salary}</span>
+                  {/* Salary */}
+                  <span style={{fontSize:12,color:"#58a6ff",fontWeight:500}}>{j.salary}</span>
 
-              {/* Difficulty badge — THE STAR OF THE SHOW */}
-              <div style={{
-                display:"inline-flex", alignItems:"center", gap:5,
-                padding:"4px 10px", borderRadius:4,
-                background:c.bg, border:`1px solid ${c.border}`,
-                width:"fit-content",
-              }}>
-                <span style={{width:5,height:5,borderRadius:"50%",background:c.dot,flexShrink:0}}/>
-                <span style={{fontSize:10,fontWeight:500,color:c.text,letterSpacing:0.8}}>{c.label}</span>
-              </div>
+                  {/* Difficulty badge — THE STAR OF THE SHOW */}
+                  <div style={{
+                    display:"inline-flex", alignItems:"center", gap:5,
+                    padding:"4px 10px", borderRadius:4,
+                    background:c.bg, border:`1px solid ${c.border}`,
+                    width:"fit-content",
+                  }}>
+                    <span style={{width:5,height:5,borderRadius:"50%",background:c.dot,flexShrink:0}}/>
+                    <span style={{fontSize:10,fontWeight:500,color:c.text,letterSpacing:0.8}}>{c.label}</span>
+                  </div>
 
-              {/* Apply */}
-              <a href={j.link} target="_blank" rel="noopener noreferrer" className="apply-btn" style={{
-                display:"inline-block", padding:"5px 12px", borderRadius:4,
-                background:"#1f6feb22", border:"1px solid #1f6feb",
-                color:"#58a6ff", fontSize:11, fontWeight:500, textDecoration:"none",
-                textAlign:"center", letterSpacing:0.3,
-              }}>
-                Apply ↗
-              </a>
-            </div>
-          );
-        })}
+                  {/* Apply */}
+                  <a href={j.link} target="_blank" rel="noopener noreferrer" className="apply-btn" style={{
+                    display:"inline-block", padding:"5px 12px", borderRadius:4,
+                    background:"#1f6feb22", border:"1px solid #1f6feb",
+                    color:"#58a6ff", fontSize:11, fontWeight:500, textDecoration:"none",
+                    textAlign:"center", letterSpacing:0.3,
+                  }}>
+                    Apply ↗
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {filtered.length === 0 && (

@@ -9,8 +9,31 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0f', color: '#e8e8e8', fontFamily: "'DM Sans', sans-serif", display: 'flex', flexDirection: 'column' }}>
+      <style>{`
+        .top-nav {
+          background: #0d0d1a;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+          padding: 16px 24px;
+          display: flex;
+          gap: 16px;
+          justify-content: center;
+          z-index: 10;
+        }
+        @media (max-width: 768px) {
+          .top-nav {
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding: 12px 16px;
+            -webkit-overflow-scrolling: touch;
+          }
+          .top-nav button {
+            flex-shrink: 0;
+            white-space: nowrap;
+          }
+        }
+      `}</style>
       {/* Top Navigation Bar */}
-      <div style={{ background: '#0d0d1a', borderBottom: '1px solid rgba(255,255,255,0.07)', padding: '16px 24px', display: 'flex', gap: '16px', justifyContent: 'center', zIndex: 10 }}>
+      <div className="top-nav">
         <button 
           onClick={() => setView('career')}
           style={{
