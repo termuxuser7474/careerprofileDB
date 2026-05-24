@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Search Report – Deebishaa S</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --surface: #111827;
+    --surface2: #1a2236;
+    --border: #1e2d47;
+    --accent: #00e5c0;
+    --accent2: #4f8cff;
+    --accent3: #ff6b35;
+    --text: #e2eaf5;
+    --muted: #7a8caa;
+    --easy: #22c55e;
+    --medium: #facc15;
+    --hard: #ef4444;
+    --tag-bg: rgba(79,140,255,0.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0b0f1a 0%, #0f1e38 60%, #091428 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 52px 48px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(0,229,192,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(0,229,192,0.12);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 560px;
+    margin-top: 10px;
+  }
+  .hero-meta {
+    display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .hero-meta .chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent2);
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 14px 18px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all .2s;
+  }
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 48px; }
+  section { margin-bottom: 56px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+
+  /* ── SKILL CHIPS ── */
+  .skill-grid {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+  }
+  .skill-chip {
+    background: var(--tag-bg);
+    border: 1px solid rgba(79,140,255,0.2);
+    color: var(--accent2);
+    border-radius: 4px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+  .skill-chip.strong {
+    background: rgba(0,229,192,0.1);
+    border-color: rgba(0,229,192,0.25);
+    color: var(--accent);
+  }
+
+  /* ── ANALYSIS CARDS ── */
+  .card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .card ul { list-style: none; }
+  .card ul li {
+    padding: 4px 0;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .card ul li::before { content: '▸'; color: var(--accent); flex-shrink: 0; }
+
+  /* ── JOB TABLE ── */
+  .job-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  thead tr { background: var(--surface2); }
+  thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  td {
+    padding: 13px 14px;
+    vertical-align: top;
+    color: var(--text);
+  }
+  .company-name { font-weight: 600; color: #fff; font-size: 13px; }
+  .role-title { font-size: 12px; color: var(--accent2); font-weight: 500; }
+  .location { color: var(--muted); font-size: 12px; }
+  .salary { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+  .diff-easy { color: var(--easy); font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; }
+  .diff-medium { color: var(--medium); font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; }
+  .diff-hard { color: var(--hard); font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; }
+  .tag-small {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--accent2);
+    border-radius: 3px;
+    padding: 2px 7px;
+    font-size: 10px;
+    margin: 1px;
+    font-family: 'DM Mono', monospace;
+  }
+  .mode-remote { background: rgba(0,229,192,0.1); color: var(--accent); }
+  .mode-onsite { background: rgba(255,107,53,0.1); color: var(--accent3); }
+  .mode-hybrid { background: rgba(79,140,255,0.1); color: var(--accent2); }
+  .match-bar {
+    height: 4px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    margin-top: 4px;
+  }
+  .apply-btn {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--accent), #00c5a8);
+    color: #0b0f1a;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: opacity .2s;
+  }
+  .apply-btn:hover { opacity: 0.85; }
+  .fresher-yes { color: var(--easy); font-size: 11px; font-family: 'DM Mono', monospace; }
+  .fresher-cond { color: var(--medium); font-size: 11px; font-family: 'DM Mono', monospace; }
+
+  /* ── KEYWORD SECTION ── */
+  .kw-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .kw-box h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .kw-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .kw { 
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── TEMPLATE BOXES ── */
+  .template-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--muted);
+    white-space: pre-wrap;
+    font-family: 'DM Mono', monospace;
+  }
+  .template-box span.ph { color: var(--accent3); font-style: italic; }
+
+  /* ── ACTION PLAN ── */
+  .plan-step {
+    display: flex; gap: 20px; margin-bottom: 20px; align-items: flex-start;
+  }
+  .plan-num {
+    min-width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    color: #0b0f1a;
+    flex-shrink: 0;
+  }
+  .plan-content h4 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .plan-content p { color: var(--muted); font-size: 13px; }
+
+  /* ── AVOID TABLE ── */
+  .avoid-row td:first-child { color: var(--hard); font-weight: 600; }
+  
+  /* ── MISSING SKILLS ── */
+  .skill-gap {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-gap:last-child { border-bottom: none; }
+  .skill-gap-name { min-width: 140px; font-weight: 500; color: #fff; font-size: 13px; }
+  .skill-gap-bar-wrap { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .skill-gap-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--accent3), var(--accent)); }
+  .skill-gap-impact { font-size: 11px; color: var(--accent); font-family: 'DM Mono', monospace; min-width: 80px; text-align: right; }
+
+  /* ── TOP 15 ── */
+  .top15-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+  .top15-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .top15-num {
+    min-width: 28px; height: 28px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .top15-info h5 { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .top15-info p { font-size: 12px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 32px 48px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 700px) {
+    .hero, .container { padding: 24px 16px; }
+    nav { padding: 0 16px; }
+    .hero h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Personalized Job Intelligence Report</div>
+  <h1>Career Roadmap for<br><span>Deebishaa S</span></h1>
+  <p>Mechatronics Engineering | B.Tech 2026 | SASTRA University · Robotics · Embedded Systems · Automation · CAD</p>
+  <div class="hero-meta">
+    <div class="chip">📍 TN / Karnataka</div>
+    <div class="chip">💰 Min ₹3.4 LPA</div>
+    <div class="chip">🎯 Fresher / 0–1 yr</div>
+    <div class="chip">📅 May 2026</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#analysis">Profile Analysis</a>
+  <a href="#jobs">Job Openings</a>
+  <a href="#skills">Skill Gaps</a>
+  <a href="#keywords">Keywords & ATS</a>
+  <a href="#templates">Message Templates</a>
+  <a href="#top15">Action Plan</a>
+</nav>
+
+<div class="container">
+
+  <!-- ══════════════════════════════════
+       SECTION 1 – PROFILE ANALYSIS
+  ══════════════════════════════════ -->
+  <section id="analysis">
+    <div class="section-label">01 — Resume Intelligence</div>
+    <div class="section-title">Your Profile at a Glance</div>
+
+    <div class="card-row">
+      <div class="card">
+        <h4>⚡ Strongest Technical Skills</h4>
+        <ul>
+          <li>Arduino & Embedded C Programming</li>
+          <li>SolidWorks & Creo (CAD Modeling)</li>
+          <li>Sensor Integration & IoT Concepts</li>
+          <li>MATLAB / Simulink</li>
+          <li>3D Printing (FDM / SolidWorks)</li>
+          <li>STM32 Microcontroller (HAL libs)</li>
+          <li>PLC Programming (Automation Studio)</li>
+          <li>Robotic System Design & Assembly</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🏭 Matching Industries</h4>
+        <ul>
+          <li>Automotive (Valeo, Bosch, Denso, BHEL)</li>
+          <li>Industrial Automation (Siemens, ABB)</li>
+          <li>Robotics & STEM Education</li>
+          <li>IoT / Smart Devices / Consumer Electronics</li>
+          <li>Manufacturing & Precision Engineering</li>
+          <li>EV / E-Mobility (emerging, high-demand)</li>
+          <li>Aerospace & Defence (future path)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>✅ Beginner-Friendly Role Fits</h4>
+        <ul>
+          <li>Graduate Engineer Trainee (GET)</li>
+          <li>Junior Embedded Engineer</li>
+          <li>Automation Trainee (PLC/SCADA)</li>
+          <li>CAD Design Engineer (Fresher)</li>
+          <li>Robotics / STEM Trainer</li>
+          <li>IoT Product Engineer</li>
+          <li>Technical Support Engineer</li>
+          <li>Quality Engineer Trainee (Mfg)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🏆 Your Competitive Advantages</h4>
+        <ul>
+          <li>3 different internships (rare as a fresher)</li>
+          <li>BHEL exposure = PSU/manufacturing credibility</li>
+          <li>STM32 + Arduino = dual embedded platform</li>
+          <li>3D Printing + SolidWorks = prototyping ready</li>
+          <li>Pipeline inspection robot = strong project</li>
+          <li>ESP32 + servo manipulator = robotics portfolio</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <p style="color:var(--muted); margin-bottom:10px; font-size:13px;">Skills powering your profile most:</p>
+      <div class="skill-grid">
+        <span class="skill-chip strong">Arduino</span>
+        <span class="skill-chip strong">SolidWorks</span>
+        <span class="skill-chip strong">Embedded C</span>
+        <span class="skill-chip strong">STM32</span>
+        <span class="skill-chip strong">MATLAB</span>
+        <span class="skill-chip">Creo</span>
+        <span class="skill-chip">3D Printing</span>
+        <span class="skill-chip">PLC Programming</span>
+        <span class="skill-chip">IoT</span>
+        <span class="skill-chip">Sensor Integration</span>
+        <span class="skill-chip">ESP32</span>
+        <span class="skill-chip">Servo Motor Control</span>
+        <span class="skill-chip">CNC (exposure)</span>
+        <span class="skill-chip">Automation Studio</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       SECTION 2 – JOB OPENINGS
+  ══════════════════════════════════ -->
+  <section id="jobs">
+    <div class="section-label">02 — Active Openings</div>
+    <div class="section-title">Curated Job Opportunities (3.4+ LPA, Fresher-Eligible)</div>
+
+    <div class="job-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Company & Role</th>
+            <th>Location</th>
+            <th>Salary</th>
+            <th>Key Skills Required</th>
+            <th>Fresher?</th>
+            <th>Mode</th>
+            <th>Difficulty</th>
+            <th>Why You Match</th>
+            <th>Apply</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- 1 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">01</td>
+            <td>
+              <div class="company-name">Valeo India</div>
+              <div class="role-title">Graduate Engineer Trainee – Test & Validation</div>
+            </td>
+            <td><div class="location">Chennai, TN<br>(Navallur R&D)</div></td>
+            <td><div class="salary">3.5–4.5 LPA</div></td>
+            <td>
+              <span class="tag-small">Embedded C/C++</span>
+              <span class="tag-small">MATLAB</span>
+              <span class="tag-small">Automotive Electronics</span>
+              <span class="tag-small">Testing Concepts</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Mechatronics branch directly eligible; MATLAB + embedded skills match</td>
+            <td><a class="apply-btn" href="https://freshershunt.in/valeo-off-campus-drive-2026/" target="_blank">Apply →</a></td>
+          </tr>
+
+          <!-- 2 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">02</td>
+            <td>
+              <div class="company-name">Valeo India</div>
+              <div class="role-title">Graduate Engineer Trainee – Production Quality</div>
+            </td>
+            <td><div class="location">Chennai, TN</div></td>
+            <td><div class="salary">3.5–4 LPA</div></td>
+            <td>
+              <span class="tag-small">7QC Tools</span>
+              <span class="tag-small">Control Plans</span>
+              <span class="tag-small">Manufacturing Quality</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Shanmuga Precision Forging internship = manufacturing quality exposure</td>
+            <td><a class="apply-btn" href="https://offcampusjobs4u.com/valeo-recruitment-2026-graduate-engineer-trainee-chennai/" target="_blank">Apply →</a></td>
+          </tr>
+
+          <!-- 3 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">03</td>
+            <td>
+              <div class="company-name">HYA Tech Pvt. Ltd.</div>
+              <div class="role-title">Automation Engineer (Fresher/Trainee)</div>
+            </td>
+            <td><div class="location">Hosur, TN</div></td>
+            <td><div class="salary">3.4–4.2 LPA</div></td>
+            <td>
+              <span class="tag-small">PLC</span>
+              <span class="tag-small">HMI</span>
+              <span class="tag-small">SCADA</span>
+              <span class="tag-small">Troubleshooting</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">PLC Programming in curriculum; Automation Studio skill matches directly</td>
+            <td><a class="apply-btn" href="https://in.indeed.com/q-plc-automation-fresher-l-hosur-jobs.html" target="_blank">Apply →</a></td>
+          </tr>
+
+          <!-- 4 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">04</td>
+            <td>
+              <div class="company-name">Access Automation</div>
+              <div class="role-title">GET – Industrial Automation (PLC/SCADA)</div>
+            </td>
+            <td><div class="location">Bengaluru, KA</div></td>
+            <td><div class="salary">3.5–5 LPA</div></td>
+            <td>
+              <span class="tag-small">PLC/SCADA</span>
+              <span class="tag-small">Drives</span>
+              <span class="tag-small">Process Instrumentation</span>
+              <span class="tag-small">HMI</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-medium">◆ MEDIUM</span></td>
+            <td style="font-size:12px;color:var(--muted);">Automation Studio PLC training + BHEL industrial exposure</td>
+            <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 5 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">05</td>
+            <td>
+              <div class="company-name">Kokban Automation</div>
+              <div class="role-title">GET – PLC/DCS/SCADA/HMI</div>
+            </td>
+            <td><div class="location">Chennai, TN</div></td>
+            <td><div class="salary">3.4–4 LPA</div></td>
+            <td>
+              <span class="tag-small">PLC</span>
+              <span class="tag-small">DCS</span>
+              <span class="tag-small">AutoCAD</span>
+              <span class="tag-small">Instrumentation</span>
+            </td>
+            <td><span class="fresher-cond">~ COND.</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">3-month OJT with stipend; PLC background helps entry</td>
+            <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-freshers-scada-jobs-SRCH_IL.0,5_IN115_KO6,20.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 6 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">06</td>
+            <td>
+              <div class="company-name">Robospace Edutech</div>
+              <div class="role-title">Robotics & STEM Trainer</div>
+            </td>
+            <td><div class="location">Bengaluru / Coimbatore</div></td>
+            <td><div class="salary">3.4–4.5 LPA</div></td>
+            <td>
+              <span class="tag-small">Arduino</span>
+              <span class="tag-small">IoT</span>
+              <span class="tag-small">Robotics</span>
+              <span class="tag-small">Teaching</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-hybrid">Hybrid</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Pipeline robot + line follower + 3-DOF manipulator projects = strong trainer profile</td>
+            <td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs-in-bangalore/" target="_blank">Apply →</a></td>
+          </tr>
+
+          <!-- 7 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">07</td>
+            <td>
+              <div class="company-name">Qtek Mechatronics</div>
+              <div class="role-title">Junior Mechatronics / Robotics Engineer</div>
+            </td>
+            <td><div class="location">Chennai, TN</div></td>
+            <td><div class="salary">3.5–4.5 LPA</div></td>
+            <td>
+              <span class="tag-small">Robotics</span>
+              <span class="tag-small">Embedded Systems</span>
+              <span class="tag-small">C/C++</span>
+              <span class="tag-small">Sensors</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Direct domain match; multiple robotics projects strengthen fitment</td>
+            <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/chennai-mechatronics-engineer-jobs-SRCH_IL.0,7_IC2833209_KO8,29.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 8 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">08</td>
+            <td>
+              <div class="company-name">iGeeks Technologies</div>
+              <div class="role-title">Embedded & IoT Trainer / Mentor</div>
+            </td>
+            <td><div class="location">Bengaluru / Chennai / Coimbatore / Mysuru</div></td>
+            <td><div class="salary">3.0–4.0 LPA</div></td>
+            <td>
+              <span class="tag-small">Embedded C</span>
+              <span class="tag-small">Arduino</span>
+              <span class="tag-small">Raspberry Pi</span>
+              <span class="tag-small">IoT</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-hybrid">Hybrid</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Arduino + STM32 + ESP32 hands-on makes you ideal; multi-city options</td>
+            <td><a class="apply-btn" href="https://www.placementindia.com/job-search/embedded-fresher-jobs-in-bangalore.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 9 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">09</td>
+            <td>
+              <div class="company-name">Ataritech Effective Industrial Solutions</div>
+              <div class="role-title">Junior Embedded Developer (IoT/WiNoT)</div>
+            </td>
+            <td><div class="location">Bengaluru, KA</div></td>
+            <td><div class="salary">3.6–4.8 LPA</div></td>
+            <td>
+              <span class="tag-small">Arduino</span>
+              <span class="tag-small">ESP8266</span>
+              <span class="tag-small">Embedded C</span>
+              <span class="tag-small">IoT</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Code Bind internship (Arduino + IoT) is direct experience for this role</td>
+            <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-embedded-freshers-jobs-SRCH_IL.0,9_IC2940587_KO10,27.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 10 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">10</td>
+            <td>
+              <div class="company-name">Entecres Labs</div>
+              <div class="role-title">Robotics Trainee (STEM / Arduino)</div>
+            </td>
+            <td><div class="location">Bengaluru, KA</div></td>
+            <td><div class="salary">3.0–3.5 LPA</div></td>
+            <td>
+              <span class="tag-small">Arduino</span>
+              <span class="tag-small">Robotics</span>
+              <span class="tag-small">STEM</span>
+              <span class="tag-small">Teaching</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">Great entry point; robotics portfolio is a strong fit</td>
+            <td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs/" target="_blank">Apply →</a></td>
+          </tr>
+
+          <!-- 11 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">11</td>
+            <td>
+              <div class="company-name">Reva Phoenix Labs & Consultants</div>
+              <div class="role-title">Engineering Trainee – Calibration Lab</div>
+            </td>
+            <td><div class="location">Chennai (Madipakkam)</div></td>
+            <td><div class="salary">3.4–4 LPA</div></td>
+            <td>
+              <span class="tag-small">Instrumentation</span>
+              <span class="tag-small">Sensors</span>
+              <span class="tag-small">Measurement</span>
+              <span class="tag-small">Quality</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">NABL lab; sensor integration background from projects is a strong fit</td>
+            <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-engineering-fresher-jobs.html" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 12 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">12</td>
+            <td>
+              <div class="company-name">ARKMINDS Infotech</div>
+              <div class="role-title">Mechatronics Fresher Engineer</div>
+            </td>
+            <td><div class="location">Chennai, TN</div></td>
+            <td><div class="salary">3.0–3.6 LPA</div></td>
+            <td>
+              <span class="tag-small">Mechatronics</span>
+              <span class="tag-small">Robotic Automation</span>
+              <span class="tag-small">Embedded Systems</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">2022–2026 batch explicitly eligible; exact branch match</td>
+            <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply →</a></td>
+          </tr>
+
+          <!-- 13 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">13</td>
+            <td>
+              <div class="company-name">Crestclimber Software Solutions</div>
+              <div class="role-title">Junior Robotics / Mechatronics Engineer</div>
+            </td>
+            <td><div class="location">Chennai, TN</div></td>
+            <td><div class="salary">3.5–5 LPA</div></td>
+            <td>
+              <span class="tag-small">Robotics</span>
+              <span class="tag-small">LabVIEW (plus)</span>
+              <span class="tag-small">IoT</span>
+              <span class="tag-small">Firmware</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-medium">◆ MEDIUM</span></td>
+            <td style="font-size:12px;color:var(--muted);">Design + embedded background; learn LabVIEW basics to crack this faster</td>
+            <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/chennai-mechatronics-engineer-jobs-SRCH_IL.0,7_IC2833209_KO8,29.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 14 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">14</td>
+            <td>
+              <div class="company-name">Aavis Engineering & Quality Solutions</div>
+              <div class="role-title">Graduate Trainee – Mechatronics / Simulation</div>
+            </td>
+            <td><div class="location">Bengaluru, KA</div></td>
+            <td><div class="salary">3.5–4.5 LPA</div></td>
+            <td>
+              <span class="tag-small">MATLAB/Simulink</span>
+              <span class="tag-small">Simulation</span>
+              <span class="tag-small">Test Automation</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-medium">◆ MEDIUM</span></td>
+            <td style="font-size:12px;color:var(--muted);">MATLAB/Simulink proficiency is rare in freshers — this is your advantage</td>
+            <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Search →</a></td>
+          </tr>
+
+          <!-- 15 -->
+          <tr>
+            <td style="color:var(--muted);font-family:'DM Mono',monospace;">15</td>
+            <td>
+              <div class="company-name">Wipro Infotech (via Evision)</div>
+              <div class="role-title">Fresher ECE / EEE / Mechatronics Engineer</div>
+            </td>
+            <td><div class="location">Chennai / Coimbatore / Hosur</div></td>
+            <td><div class="salary">3.5–4.5 LPA</div></td>
+            <td>
+              <span class="tag-small">Electronics Basics</span>
+              <span class="tag-small">Communication</span>
+              <span class="tag-small">Aptitude</span>
+            </td>
+            <td><span class="fresher-yes">✔ YES</span></td>
+            <td><span class="tag-small mode-onsite">On-site</span></td>
+            <td><span class="diff-easy">● EASY</span></td>
+            <td style="font-size:12px;color:var(--muted);">MNC bulk hiring; mechatronics branch accepted; local preferred locations</td>
+            <td><a class="apply-btn" href="https://www.naukri.com/scada-flex-jobs-in-chennai" target="_blank">Search →</a></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ROLES TO AVOID -->
+    <div style="margin-top:32px;">
+      <div class="section-label">⚠ Roles to Avoid Currently</div>
+      <div class="job-table-wrap" style="margin-top:12px;">
+        <table>
+          <thead>
+            <tr><th>Role</th><th>Why Avoid Now</th><th>When to Apply</th></tr>
+          </thead>
+          <tbody class="avoid-row">
+            <tr><td>Senior PLC / SCADA Engineer</td><td>Requires 2–5 years; misapplication wastes time</td><td>After 2 years as GET</td></tr>
+            <tr><td>Firmware Engineer (RTOS / Linux)</td><td>Needs RTOS/Linux knowledge not yet in your profile</td><td>After learning FreeRTOS / Yocto</td></tr>
+            <tr><td>Software Engineer (IT/FAANG)</td><td>CS-heavy; very competitive; not your strength</td><td>Only if you pivot to tech</td></tr>
+            <tr><td>R&D Scientist / Research Engineer</td><td>Typically requires M.Tech or publications</td><td>After postgrad if interested</td></tr>
+            <tr><td>Cybersecurity Engineer</td><td>No background in networking/security yet</td><td>After certification (CEH/Security+)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       SECTION 3 – SKILL GAPS
+  ══════════════════════════════════ -->
+  <section id="skills">
+    <div class="section-label">03 — Skill Intelligence</div>
+    <div class="section-title">Missing Skills for Higher Salary Roles</div>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px;">
+      <div class="skill-gap">
+        <div class="skill-gap-name">Python</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:90%"></div></div>
+        <div class="skill-gap-impact">+₹1–2 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">ROS / ROS2</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:85%"></div></div>
+        <div class="skill-gap-impact">+₹1.5–3 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">PLC (Siemens TIA)</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:80%"></div></div>
+        <div class="skill-gap-impact">+₹1–2 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">PCB Design (KiCad/Altium)</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:75%"></div></div>
+        <div class="skill-gap-impact">+₹0.5–1.5 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">CATIA / NX CAD</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:70%"></div></div>
+        <div class="skill-gap-impact">+₹0.5–1 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">FreeRTOS / Embedded OS</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:65%"></div></div>
+        <div class="skill-gap-impact">+₹1–2 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">AUTOSAR / CAN Bus</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:60%"></div></div>
+        <div class="skill-gap-impact">+₹2–4 LPA</div>
+      </div>
+      <div class="skill-gap">
+        <div class="skill-gap-name">LabVIEW</div>
+        <div class="skill-gap-bar-wrap"><div class="skill-gap-bar" style="width:50%"></div></div>
+        <div class="skill-gap-impact">+₹0.5–1 LPA</div>
+      </div>
+    </div>
+    <p style="margin-top:14px; color:var(--muted); font-size:12px;">
+      💡 <strong style="color:var(--accent);">Quick win:</strong> Learn Python (free via YouTube/Kaggle) — it immediately unlocks 40%+ more job listings and raises your ceiling to 5–6 LPA within 6 months.
+    </p>
+  </section>
+
+  <!-- ══════════════════════════════════
+       SECTION 4 – KEYWORDS & ATS
+  ══════════════════════════════════ -->
+  <section id="keywords">
+    <div class="section-label">04 — Search & ATS Optimization</div>
+    <div class="section-title">Keywords, Job Search Strings & ATS Tags</div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:16px;">
+
+      <div class="kw-box">
+        <h4>🔵 LinkedIn Job Search Keywords</h4>
+        <div class="kw-list">
+          <span class="kw">Mechatronics Engineer Fresher</span>
+          <span class="kw">Graduate Engineer Trainee Mechatronics</span>
+          <span class="kw">Embedded Systems Fresher Chennai</span>
+          <span class="kw">Junior Robotics Engineer</span>
+          <span class="kw">Automation Engineer Trainee</span>
+          <span class="kw">IoT Engineer Fresher Bengaluru</span>
+          <span class="kw">PLC SCADA Fresher Tamil Nadu</span>
+          <span class="kw">CAD Design Engineer Fresher</span>
+          <span class="kw">GET Manufacturing</span>
+          <span class="kw">Robotics Trainer Fresher</span>
+        </div>
+      </div>
+
+      <div class="kw-box">
+        <h4>🟠 Naukri.com Search Strings</h4>
+        <div class="kw-list">
+          <span class="kw">Mechatronics 0-1 years Chennai</span>
+          <span class="kw">GET Mechatronics Bangalore</span>
+          <span class="kw">Embedded C Fresher Tamil Nadu</span>
+          <span class="kw">Arduino IoT Engineer Fresher</span>
+          <span class="kw">Robotics Automation Fresher</span>
+          <span class="kw">SolidWorks Fresher Engineer</span>
+          <span class="kw">MATLAB Engineer Fresher</span>
+          <span class="kw">PLC Fresher Chennai Hosur</span>
+          <span class="kw">Product Design Engineer Fresher</span>
+          <span class="kw">3D Printing CAD Engineer</span>
+        </div>
+      </div>
+
+      <div class="kw-box">
+        <h4>🟢 ATS Keywords for Your Resume</h4>
+        <p style="color:var(--muted); font-size:12px; margin-bottom:10px;">Add these in your resume summary, skills, and project descriptions to beat applicant tracking systems:</p>
+        <div class="kw-list">
+          <span class="kw">Mechatronics</span>
+          <span class="kw">Embedded Systems</span>
+          <span class="kw">Arduino</span>
+          <span class="kw">STM32</span>
+          <span class="kw">ESP32</span>
+          <span class="kw">Sensor Integration</span>
+          <span class="kw">IoT</span>
+          <span class="kw">MATLAB Simulink</span>
+          <span class="kw">SolidWorks</span>
+          <span class="kw">Creo</span>
+          <span class="kw">PLC Programming</span>
+          <span class="kw">Automation Studio</span>
+          <span class="kw">FDM 3D Printing</span>
+          <span class="kw">Robotic Systems</span>
+          <span class="kw">Embedded C</span>
+          <span class="kw">C++</span>
+          <span class="kw">Motor Control</span>
+          <span class="kw">Real-time Systems</span>
+          <span class="kw">Graduate Engineer Trainee</span>
+          <span class="kw">Industrial Automation</span>
+          <span class="kw">BHEL Internship</span>
+          <span class="kw">Circuit Design</span>
+          <span class="kw">Servo Motors</span>
+          <span class="kw">PWM ADC USART</span>
+        </div>
+      </div>
+
+      <div class="kw-box">
+        <h4>🏢 Top Companies to Target Directly</h4>
+        <div class="kw-list">
+          <span class="kw">Valeo India</span>
+          <span class="kw">Bosch India</span>
+          <span class="kw">Siemens India</span>
+          <span class="kw">ABB India</span>
+          <span class="kw">Honeywell India</span>
+          <span class="kw">Schneider Electric</span>
+          <span class="kw">Rockwell Automation</span>
+          <span class="kw">Tata Technologies</span>
+          <span class="kw">L&T Technology</span>
+          <span class="kw">Mahindra Electric</span>
+          <span class="kw">Ather Energy</span>
+          <span class="kw">Qtek Mechatronics</span>
+          <span class="kw">HYA Tech</span>
+          <span class="kw">Access Automation</span>
+          <span class="kw">BHEL (Perm)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ATS RESUME TIPS -->
+    <div class="kw-box" style="margin-top:16px; border-left:3px solid var(--accent);">
+      <h4>📄 ATS Resume Improvement Tips (Critical)</h4>
+      <div style="color:var(--muted); font-size:13px; line-height:2;">
+        ① Your current CGPA is 6.17 — many companies filter below 6.5/7.0. <strong style="color:#fff;">Avoid mentioning CGPA upfront</strong> — put it in education section only.<br>
+        ② Add <strong style="color:#fff;">quantified results</strong> to projects: "Reduced manual inspection by 70% using sensor-based pipeline robot."<br>
+        ③ Add a <strong style="color:#fff;">Technical Skills table</strong> at the top — ATS scanners look for exact keyword matches.<br>
+        ④ Use <strong style="color:#fff;">standard section headers</strong>: "Work Experience", "Projects", "Education" — avoid creative names.<br>
+        ⑤ Save resume as <strong style="color:#fff;">PDF (not Word)</strong> for portals; use plain fonts — your current resume looks good visually.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       SECTION 5 – TEMPLATES
+  ══════════════════════════════════ -->
+  <section id="templates">
+    <div class="section-label">05 — Outreach Templates</div>
+    <div class="section-title">Recruiter & Cold Email Messages</div>
+
+    <div style="margin-bottom:8px; color:var(--muted); font-size:13px;">🔵 LinkedIn Recruiter Message (100 words max)</div>
+    <div class="template-box">Hi <span class="ph">[Recruiter Name]</span>,
+
+I am Deebishaa S, a final-year Mechatronics Engineering student at SASTRA University (2026 batch), with hands-on experience in embedded systems (Arduino, STM32, ESP32), MATLAB, SolidWorks, and industrial automation (PLC/SCADA).
+
+I completed internships at BHEL and Code Bind Technologies, and built projects including a vertical pipeline inspection robot and a 3-DOF robotic manipulator.
+
+I came across <span class="ph">[Company Name]</span>'s openings for fresher/GET roles and believe I can add value immediately. Could we connect for a quick conversation?
+
+Thank you,
+Deebishaa S | +91 9843414377 | deebishaa07@gmail.com</div>
+
+    <div style="margin-bottom:8px; color:var(--muted); font-size:13px;">📧 Cold Email to HR / Hiring Manager</div>
+    <div class="template-box">Subject: Application – Graduate Engineer Trainee | Mechatronics | 2026 Batch
+
+Dear <span class="ph">[HR Manager / Hiring Manager]</span>,
+
+I am writing to express my strong interest in entry-level / GET roles at <span class="ph">[Company Name]</span>.
+
+I am a B.Tech Mechatronics Engineering student at SASTRA University (graduating 2026), with the following highlights:
+  • 3 industrial internships: BHEL, Code Bind Technologies, Shanmuga Precision Forging
+  • Proficient in: Arduino, STM32, ESP32, MATLAB/Simulink, SolidWorks, PLC Programming
+  • Projects: Vertical Pipeline Inspection Robot, 3-DOF Manipulator, Line Follower Robot, STM32 Embedded Lab Work
+
+I am particularly drawn to <span class="ph">[Company]</span>'s work in <span class="ph">[specific domain – e.g., automotive electronics / industrial automation]</span> and am eager to contribute as a quick learner.
+
+I have attached my resume for your consideration. I would welcome any opportunity to discuss how I can contribute to your team.
+
+Warm regards,
+Deebishaa S
++91 9843414377 | deebishaa07@gmail.com
+linkedin.com/in/deebishaa-s-477407373</div>
+
+    <div style="margin-bottom:8px; color:var(--muted); font-size:13px;">💬 WhatsApp / Short Message (for referrals)</div>
+    <div class="template-box">Hi <span class="ph">[Name]</span>, this is Deebishaa – Mechatronics final year from SASTRA University. I interned at BHEL and have hands-on experience in embedded systems (Arduino, STM32), MATLAB, SolidWorks, and robotics. I am actively looking for GET / junior engineer roles in Chennai or Bengaluru (3.4+ LPA). If you know of any openings or can refer me, I'd really appreciate it. Happy to share my resume!</div>
+
+  </section>
+
+  <!-- ══════════════════════════════════
+       SECTION 6 – TOP 15 + ACTION PLAN
+  ══════════════════════════════════ -->
+  <section id="top15">
+    <div class="section-label">06 — Final Action Plan</div>
+    <div class="section-title">Top 15 Applications + Daily Strategy</div>
+
+    <div class="top15-grid" style="margin-bottom:36px;">
+      <div class="top15-card"><div class="top15-num">01</div><div class="top15-info"><h5>Valeo GET – Test & Validation</h5><p>Chennai | APPLY NOW on their careers portal</p></div></div>
+      <div class="top15-card"><div class="top15-num">02</div><div class="top15-info"><h5>Valeo GET – Production Quality</h5><p>Chennai | Apply via offcampusjobs4u link</p></div></div>
+      <div class="top15-card"><div class="top15-num">03</div><div class="top15-info"><h5>HYA Tech – Automation Trainee</h5><p>Hosur | Apply via Indeed directly</p></div></div>
+      <div class="top15-card"><div class="top15-num">04</div><div class="top15-info"><h5>Qtek Mechatronics – Junior Engineer</h5><p>Chennai | Apply on Glassdoor / Naukri</p></div></div>
+      <div class="top15-card"><div class="top15-num">05</div><div class="top15-info"><h5>ARKMINDS Infotech – Mechatronics Fresher</h5><p>Chennai | Apply via Indeed (2026 batch eligible)</p></div></div>
+      <div class="top15-card"><div class="top15-num">06</div><div class="top15-info"><h5>Access Automation – GET PLC/SCADA</h5><p>Bengaluru | Apply via Glassdoor</p></div></div>
+      <div class="top15-card"><div class="top15-num">07</div><div class="top15-info"><h5>Robospace Edutech – Robotics Trainer</h5><p>Bengaluru | Apply on Internshala now</p></div></div>
+      <div class="top15-card"><div class="top15-num">08</div><div class="top15-info"><h5>iGeeks Technologies – Embedded Trainer</h5><p>Coimbatore/Chennai | Apply on PlacementIndia</p></div></div>
+      <div class="top15-card"><div class="top15-num">09</div><div class="top15-info"><h5>Ataritech – Junior Embedded IoT Developer</h5><p>Bengaluru | Apply on Glassdoor</p></div></div>
+      <div class="top15-card"><div class="top15-num">10</div><div class="top15-info"><h5>Kokban Automation – GET PLC/DCS</h5><p>Chennai | Apply on Glassdoor / Naukri</p></div></div>
+      <div class="top15-card"><div class="top15-num">11</div><div class="top15-info"><h5>Reva Phoenix Labs – Engineering Trainee</h5><p>Chennai Madipakkam | Apply via Indeed</p></div></div>
+      <div class="top15-card"><div class="top15-num">12</div><div class="top15-info"><h5>Aavis Engineering – Simulation Trainee</h5><p>Bengaluru | Apply via Glassdoor (MATLAB strength)</p></div></div>
+      <div class="top15-card"><div class="top15-num">13</div><div class="top15-info"><h5>Wipro (via Evision Technoserve)</h5><p>Chennai/Coimbatore | Apply via Naukri</p></div></div>
+      <div class="top15-card"><div class="top15-num">14</div><div class="top15-info"><h5>Bosch India – GET (Manufacturing/Embedded)</h5><p>Chennai/Bengaluru | Apply on careers.bosch.com</p></div></div>
+      <div class="top15-card"><div class="top15-num">15</div><div class="top15-info"><h5>L&T Technology Services – GET</h5><p>Bengaluru/Chennai | Apply on ltts.com/careers</p></div></div>
+    </div>
+
+    <!-- DAILY PLAN -->
+    <div class="plan-step">
+      <div class="plan-num">1</div>
+      <div class="plan-content">
+        <h4>Daily Application Target: 5–8 Applications / Day</h4>
+        <p>Spread across Naukri, LinkedIn, Indeed, Internshala, and company career pages. Set up job alerts on all platforms with your key terms. Apply within 24 hours of any new posting — early applicants have 3× higher response rates.</p>
+      </div>
+    </div>
+    <div class="plan-step">
+      <div class="plan-num">2</div>
+      <div class="plan-content">
+        <h4>Best Time to Apply: Tuesday–Thursday, 9 AM – 12 PM</h4>
+        <p>HR teams review applications at the start of workdays mid-week. Avoid Monday (busy) and Friday (wind-down). Apply in the morning so your application sits at the top of the HR inbox.</p>
+      </div>
+    </div>
+    <div class="plan-step">
+      <div class="plan-num">3</div>
+      <div class="plan-content">
+        <h4>Improve Interview Chances: Prepare a Project Demo Video</h4>
+        <p>Create a 2–3 minute YouTube video of your pipeline inspection robot or 3-DOF manipulator in action. Add the link to your resume and LinkedIn. This is extremely rare for freshers and dramatically increases recruiter interest and shortlisting.</p>
+      </div>
+    </div>
+    <div class="plan-step">
+      <div class="plan-num">4</div>
+      <div class="plan-content">
+        <h4>Increase Recruiter Responses: LinkedIn Optimization</h4>
+        <p>Set LinkedIn status to "Open to Work" (visible to recruiters). Upload your project photos, update skills section with all technical keywords, and post once a week about a project or learning. Engage with posts by Valeo, Bosch, Siemens India HR pages.</p>
+      </div>
+    </div>
+    <div class="plan-step">
+      <div class="plan-num">5</div>
+      <div class="plan-content">
+        <h4>30-Day Quick Skill Boost: Learn Python Basics</h4>
+        <p>Spend 1 hour daily on Python (free on YouTube or CS50P). Within 30 days you can add "Python (Basic–Intermediate)" to your resume, immediately unlocking 40%+ more job listings in IoT, automation scripting, and data acquisition roles.</p>
+      </div>
+    </div>
+    <div class="plan-step">
+      <div class="plan-num">6</div>
+      <div class="plan-content">
+        <h4>Use SASTRA's Training & Placement Cell Actively</h4>
+        <p>Register formally with your T&P office and ensure your profile is updated for campus drives. Companies like BHEL, L&T, Bosch, Valeo, and Tata Technologies regularly visit SASTRA. Your BHEL internship is a strong credibility signal for future BHEL campus drives.</p>
+      </div>
+    </div>
+
+  </section>
+
+</div><!-- /container -->
+
+<footer>
+  PERSONALIZED REPORT FOR DEEBISHAA S &nbsp;·&nbsp; GENERATED MAY 2026 &nbsp;·&nbsp; POWERED BY CLAUDE AI<br>
+  <span style="color:rgba(122,140,170,0.5);">All job links are for search guidance. Verify current openings on official portals before applying.</span>
+</footer>
+
+</body>
+</html>

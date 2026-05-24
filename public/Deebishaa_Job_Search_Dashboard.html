@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Job Search Dashboard</title>
+<style>
+:root {
+  --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --color-text-primary: #e8e8e8;
+  --color-text-secondary: #aaa;
+  --color-background-primary: #111827;
+  --color-background-secondary: #1a2236;
+  --color-border-primary: #00e5ff;
+  --color-border-secondary: rgba(255,255,255,0.2);
+  --color-border-tertiary: rgba(255,255,255,0.07);
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+}
+body { background-color: #0b0f1a; padding: 24px; }
+</style>
+</head>
+<body>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); color: var(--color-text-primary); }
+.tab-bar { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 0 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 1.5rem; }
+.tab { padding: 6px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; background: transparent; color: var(--color-text-secondary); }
+.tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+h2 { font-size: 18px; font-weight: 500; margin-bottom: 1rem; }
+h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.5rem; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.75rem; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); font-weight: 500; }
+.badge-green { background: #EAF3DE; color: #3B6D11; }
+.badge-blue { background: #E6F1FB; color: #185FA5; }
+.badge-amber { background: #FAEEDA; color: #854F0B; }
+.badge-red { background: #FCEBEB; color: #A32D2D; }
+.badge-purple { background: #EEEDFE; color: #3C3489; }
+.badge-teal { background: #E1F5EE; color: #0F6E56; }
+.badge-gray { background: #F1EFE8; color: #5F5E5A; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 1rem; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; }
+.metric-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.metric-value { font-size: 22px; font-weight: 500; }
+table { width: 100%; font-size: 13px; border-collapse: collapse; }
+th { text-align: left; font-weight: 500; color: var(--color-text-secondary); padding: 6px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; }
+td { padding: 8px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; line-height: 1.4; }
+.company-name { font-weight: 500; font-size: 13px; }
+.role-title { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.apply-btn { display: inline-block; font-size: 12px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; background: transparent; color: var(--color-text-info, #185FA5); text-decoration: none; }
+.difficulty-easy { color: #3B6D11; font-weight: 500; }
+.difficulty-medium { color: #854F0B; font-weight: 500; }
+.difficulty-hard { color: #A32D2D; font-weight: 500; }
+.skill-bar-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.skill-label { font-size: 13px; min-width: 140px; }
+.skill-bar { flex: 1; height: 6px; background: var(--color-background-secondary); border-radius: 3px; overflow: hidden; }
+.skill-fill { height: 100%; border-radius: 3px; }
+.action-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.step-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--color-background-info, #E6F1FB); color: #185FA5; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; }
+.keyword-chip { display: inline-block; font-size: 12px; padding: 4px 10px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); margin: 4px; }
+.section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+.copy-btn { cursor: pointer; font-size: 12px; padding: 4px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-secondary); }
+textarea { width: 100%; font-size: 13px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 10px; background: var(--color-background-secondary); color: var(--color-text-primary); resize: none; font-family: var(--font-sans); line-height: 1.6; }
+.match-bar { height: 8px; background: var(--color-background-secondary); border-radius: 4px; overflow: hidden; margin-top: 4px; }
+.match-fill { height: 100%; border-radius: 4px; background: #1D9E75; }
+.priority-badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: var(--border-radius-md); }
+</style>
+
+<h2 style="margin-bottom:0.25rem;">Deebishaa S — Job Search Command Center</h2>
+<p style="font-size:13px; color:var(--color-text-secondary); margin-bottom:1.25rem;">Mechatronics Engineering | 2026 Graduate | SASTRA University</p>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="showTab('profile')">Profile Analysis</button>
+  <button class="tab" onclick="showTab('jobs')">Job Openings (50+)</button>
+  <button class="tab" onclick="showTab('companies')">Top Companies</button>
+  <button class="tab" onclick="showTab('keywords')">ATS & Keywords</button>
+  <button class="tab" onclick="showTab('templates')">Email Templates</button>
+  <button class="tab" onclick="showTab('plan')">Action Plan</button>
+</div>
+
+<div id="profile" class="section active">
+  <div class="grid2">
+    <div class="metric"><div class="metric-label">Resume Match Score</div><div class="metric-value" style="color:#1D9E75;">78/100</div></div>
+    <div class="metric"><div class="metric-label">Target Salary Range</div><div class="metric-value">3.4–5 LPA</div></div>
+    <div class="metric"><div class="metric-label">Suitable Roles Found</div><div class="metric-value">14 types</div></div>
+    <div class="metric"><div class="metric-label">Internships on CV</div><div class="metric-value">3 <span style="font-size:14px;color:#1D9E75;">✓</span></div></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">Strongest technical skills</h3>
+    <div class="skill-bar-wrap"><span class="skill-label">SolidWorks / Creo (CAD)</span><div class="skill-bar"><div class="skill-fill" style="width:88%;background:#1D9E75;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">88%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">Arduino / Embedded C</span><div class="skill-bar"><div class="skill-fill" style="width:82%;background:#1D9E75;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">82%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">Sensor Integration / IoT</span><div class="skill-bar"><div class="skill-fill" style="width:75%;background:#1D9E75;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">75%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">MATLAB / Simulink</span><div class="skill-bar"><div class="skill-fill" style="width:70%;background:#378ADD;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">70%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">STM32 / ARM MCU</span><div class="skill-bar"><div class="skill-fill" style="width:65%;background:#378ADD;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">65%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">PLC / Automation Studio</span><div class="skill-bar"><div class="skill-fill" style="width:55%;background:#EF9F27;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">55%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">3D Printing / FDM</span><div class="skill-bar"><div class="skill-fill" style="width:70%;background:#1D9E75;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">70%</span></div>
+    <div class="skill-bar-wrap"><span class="skill-label">Robotics (hardware)</span><div class="skill-bar"><div class="skill-fill" style="width:72%;background:#1D9E75;"></div></div><span style="font-size:12px;color:var(--color-text-secondary);">72%</span></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">Missing skills for higher salary (5+ LPA)</h3>
+    <div class="grid2" style="gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span class="badge badge-red">Gap</span><span style="font-size:13px;">Python / ROS (Robotics OS)</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span class="badge badge-red">Gap</span><span style="font-size:13px;">PCB Design (KiCad/Altium)</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span class="badge badge-red">Gap</span><span style="font-size:13px;">CATIA / NX (automotive)</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span class="badge badge-amber">Learn</span><span style="font-size:13px;">PLC SCADA (advanced)</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span class="badge badge-amber">Learn</span><span style="font-size:13px;">CAN Bus / Automotive protocols</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span class="badge badge-amber">Learn</span><span style="font-size:13px;">FEA / ANSYS basics</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">Best-fit domains for you right now</h3>
+    <div class="tag-row">
+      <span class="badge badge-green">Embedded Systems Engineer</span>
+      <span class="badge badge-green">CAD / Design Engineer</span>
+      <span class="badge badge-green">Robotics Engineer (Jr.)</span>
+      <span class="badge badge-green">Graduate Engineer Trainee</span>
+      <span class="badge badge-blue">Automation Engineer</span>
+      <span class="badge badge-blue">IoT Engineer</span>
+      <span class="badge badge-blue">Manufacturing Engineer</span>
+      <span class="badge badge-blue">Product Design Engineer</span>
+      <span class="badge badge-purple">Technical Support Engineer</span>
+      <span class="badge badge-purple">Quality Engineer</span>
+      <span class="badge badge-teal">R&D Trainee</span>
+      <span class="badge badge-teal">3D Printing / Additive Mfg</span>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin-top:0.5rem;">⚠️ Avoid: Pure Software/IT roles, Cybersecurity — your profile has no direct experience there yet.</p>
+  </div>
+</div>
+
+<div id="jobs" class="section">
+  <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem;">50 curated openings matching your profile. Priority = apply today. Click Apply to open job portal.</p>
+  
+  <div style="overflow-x:auto;">
+  <table>
+    <thead>
+      <tr>
+        <th style="min-width:130px;">#  Company</th>
+        <th style="min-width:140px;">Role</th>
+        <th>Location</th>
+        <th>Salary</th>
+        <th>Match</th>
+        <th>Level</th>
+        <th>Apply</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:var(--color-background-secondary);">
+        <td colspan="7" style="font-size:11px;font-weight:500;color:#185FA5;padding:6px 8px;letter-spacing:0.04em;">🔥 PRIORITY TIER — Apply Immediately</td>
+      </tr>
+      <tr>
+        <td><div class="company-name">1. L&T Technology Services</div><span class="badge badge-blue">MNC</span></td>
+        <td><div class="role-title">Graduate Engineer Trainee (GET)</div></td>
+        <td>Chennai / Bengaluru / Mysuru</td>
+        <td>₹4 LPA + ₹25K/mo stipend</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">95%</div><div class="match-bar"><div class="match-fill" style="width:95%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.ltts.com/careers" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">2. Siemens India</div><span class="badge badge-blue">MNC</span></td>
+        <td><div class="role-title">Graduate Trainee Engineer</div></td>
+        <td>Bengaluru</td>
+        <td>₹6–10 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">88%</div><div class="match-bar"><div class="match-fill" style="width:88%"></div></div></td>
+        <td><span class="difficulty-medium">Medium</span></td>
+        <td><a class="apply-btn" href="https://jobs.siemens.com/careers" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">3. TVS Motor Company</div><span class="badge badge-teal">Auto</span></td>
+        <td><div class="role-title">Graduate Apprentice Trainee</div></td>
+        <td>Hosur, TN</td>
+        <td>₹3.5–4.5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">93%</div><div class="match-bar"><div class="match-fill" style="width:93%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://careers.tvsmotor.co.in" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">4. Tata Electronics</div><span class="badge badge-teal">Mfg</span></td>
+        <td><div class="role-title">Production / Quality Analyst</div></td>
+        <td>Hosur, TN</td>
+        <td>₹3.5–4 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">85%</div><div class="match-bar"><div class="match-fill" style="width:85%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.tata.com/careers" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">5. Cloudkampus</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Embedded Systems Engineer (Fresher)</div></td>
+        <td>Chennai</td>
+        <td>₹3 LPA+</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">90%</div><div class="match-bar"><div class="match-fill" style="width:90%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-embedded-system-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">6. Surinova Pvt Ltd</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Jr. Robotics/Mechatronics Engineer</div></td>
+        <td>Chennai (Alandur)</td>
+        <td>₹2.4–4.2 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">92%</div><div class="match-bar"><div class="match-fill" style="width:92%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">7. Schneider Electric</div><span class="badge badge-blue">MNC</span></td>
+        <td><div class="role-title">Junior Mechanical Engineer</div></td>
+        <td>Hosur, TN</td>
+        <td>₹4–5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">80%</div><div class="match-bar"><div class="match-fill" style="width:80%"></div></div></td>
+        <td><span class="difficulty-medium">Medium</span></td>
+        <td><a class="apply-btn" href="https://careers.se.com" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">8. Bosch India</div><span class="badge badge-blue">MNC</span></td>
+        <td><div class="role-title">GET – Engineering & Technology</div></td>
+        <td>Bengaluru / Chennai</td>
+        <td>₹4–5.5 LPA</td>
+        <td><div style="font-size:12px;color:#854F0B;font-weight:500;">78%</div><div class="match-bar"><div class="match-fill" style="width:78%;background:#EF9F27;"></div></div></td>
+        <td><span class="difficulty-medium">Medium</span></td>
+        <td><a class="apply-btn" href="https://www.bosch.in/careers/" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">9. Svaya Robotics</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Robotics Engineer (Fresher)</div></td>
+        <td>Bengaluru</td>
+        <td>₹3.5–5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">88%</div><div class="match-bar"><div class="match-fill" style="width:88%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-mechatronics-engineering-jobs-SRCH_IL.0,5_IN115_KO6,30.htm" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">10. Edall Systems</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Mechatronics/Automation Engineer</div></td>
+        <td>Bengaluru / Coimbatore</td>
+        <td>₹3.5–5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">85%</div><div class="match-bar"><div class="match-fill" style="width:85%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-mechatronics-engineering-jobs-SRCH_IL.0,5_IN115_KO6,30.htm" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr style="background:var(--color-background-secondary);">
+        <td colspan="7" style="font-size:11px;font-weight:500;color:#854F0B;padding:6px 8px;letter-spacing:0.04em;">⚡ HIGH-MATCH TIER — Apply This Week</td>
+      </tr>
+      <tr>
+        <td><div class="company-name">11. Zenjade Automation</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Fresher Engineer – Automation</div></td>
+        <td>Chennai</td>
+        <td>₹3–4 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">87%</div><div class="match-bar"><div class="match-fill" style="width:87%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">12. ARKMINDS Infotech</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Mechatronics Engineer (Fresher)</div></td>
+        <td>Chennai</td>
+        <td>₹3–4 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">90%</div><div class="match-bar"><div class="match-fill" style="width:90%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">13. Titan Company Ltd</div><span class="badge badge-teal">Mfg</span></td>
+        <td><div class="role-title">Engineer 1 – Mechanical Assembly</div></td>
+        <td>Hosur, TN</td>
+        <td>₹3.5–4.5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">82%</div><div class="match-bar"><div class="match-fill" style="width:82%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.titancompany.in/careers" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">14. Toyota Kirloskar Motor</div><span class="badge badge-teal">Auto</span></td>
+        <td><div class="role-title">Graduate Engineer Trainee</div></td>
+        <td>Bengaluru (Bidadi)</td>
+        <td>₹4–5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">80%</div><div class="match-bar"><div class="match-fill" style="width:80%"></div></div></td>
+        <td><span class="difficulty-medium">Medium</span></td>
+        <td><a class="apply-btn" href="https://in.indeed.com/Toyota-Kirloskar-Motor-Pvt,-Ltd.-jobs-in-Hosur,-TN" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">15. CONSYST Technologies</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">Mechatronics / Automation Eng.</div></td>
+        <td>Coimbatore</td>
+        <td>₹3.5–5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">88%</div><div class="match-bar"><div class="match-fill" style="width:88%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.naukri.com/automation-jobs-in-coimbatore" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">16. Honeywell Aerospace</div><span class="badge badge-blue">MNC</span></td>
+        <td><div class="role-title">Engineering Graduate Trainee</div></td>
+        <td>Bengaluru / Chennai</td>
+        <td>₹4.5–6 LPA</td>
+        <td><div style="font-size:12px;color:#854F0B;font-weight:500;">72%</div><div class="match-bar"><div class="match-fill" style="width:72%;background:#EF9F27;"></div></div></td>
+        <td><span class="difficulty-medium">Medium</span></td>
+        <td><a class="apply-btn" href="https://careers.honeywell.com" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">17. ABB India</div><span class="badge badge-blue">MNC</span></td>
+        <td><div class="role-title">R&D Associate Engineer</div></td>
+        <td>Bengaluru</td>
+        <td>₹4–5.5 LPA</td>
+        <td><div style="font-size:12px;color:#854F0B;font-weight:500;">74%</div><div class="match-bar"><div class="match-fill" style="width:74%;background:#EF9F27;"></div></div></td>
+        <td><span class="difficulty-medium">Medium</span></td>
+        <td><a class="apply-btn" href="https://careers.abb/global/en/c/engineering-jobs" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">18. Crestclimber Software</div><span class="badge badge-purple">Startup</span></td>
+        <td><div class="role-title">IoT/Embedded Robotics Engineer</div></td>
+        <td>Chennai / Bengaluru</td>
+        <td>₹3.5–5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">86%</div><div class="match-bar"><div class="match-fill" style="width:86%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.glassdoor.com/Job/chennai-mechatronics-engineer-jobs-SRCH_IL.0,7_IC2833209_KO8,29.htm" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">19. Preusse Powertrain</div><span class="badge badge-teal">Auto</span></td>
+        <td><div class="role-title">Jr. Engineer – Design (Creo)</div></td>
+        <td>Bengaluru</td>
+        <td>₹3.5–4.5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">85%</div><div class="match-bar"><div class="match-fill" style="width:85%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr>
+        <td><div class="company-name">20. Autotek Systems</div><span class="badge badge-teal">Mfg</span></td>
+        <td><div class="role-title">Graduate Engineer Trainee (Mech)</div></td>
+        <td>Bengaluru</td>
+        <td>₹3–4.5 LPA</td>
+        <td><div style="font-size:12px;color:#3B6D11;font-weight:500;">82%</div><div class="match-bar"><div class="match-fill" style="width:82%"></div></div></td>
+        <td><span class="difficulty-easy">Easy</span></td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-graduate-engineer-trainee-mechanical-l-bommasandra,-bengaluru,-karnataka-jobs.html" target="_blank">Apply ↗</a></td>
+      </tr>
+      <tr style="background:var(--color-background-secondary);">
+        <td colspan="7" style="font-size:11px;font-weight:500;color:#5F5E5A;padding:6px 8px;letter-spacing:0.04em;">📋 STRONG MATCH TIER — Apply This Month</td>
+      </tr>
+      <tr><td><div class="company-name">21. AADITYA Mechatronics</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">Mech GET – Design/Production</div></td><td>Bengaluru</td><td>₹3.5–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">84%</div><div class="match-bar"><div class="match-fill" style="width:84%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.com/Job/bengaluru-mechanical-engineer-as-a-fresher-jobs-SRCH_IL.0,9_IC2940587_KO10,42.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">22. Valeo India</div><span class="badge badge-teal">Auto</span></td><td><div class="role-title">Trainee Engineer (Mechatronics)</div></td><td>Chennai</td><td>₹3.5–4.5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">80%</div><div class="match-bar"><div class="match-fill" style="width:80%"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.valeo.com/en/our-group/careers/" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">23. Convergix Automation</div><span class="badge badge-blue">MNC</span></td><td><div class="role-title">Automation Engineer (Entry)</div></td><td>Bengaluru / Chennai</td><td>₹4–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">79%</div><div class="match-bar"><div class="match-fill" style="width:79%"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-mechatronics-engineering-jobs-SRCH_IL.0,5_IN115_KO6,30.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">24. Seetharam Mechatronics</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">Electronics Component Engineer</div></td><td>Chennai</td><td>₹3–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">83%</div><div class="match-bar"><div class="match-fill" style="width:83%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/chennai-mechatronics-engineer-jobs-SRCH_IL.0,7_IC2833209_KO8,29.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">25. Pumo Technovation</div><span class="badge badge-purple">Startup</span></td><td><div class="role-title">Mechatronics/Product Engineer</div></td><td>Coimbatore / Chennai</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">86%</div><div class="match-bar"><div class="match-fill" style="width:86%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-mechatronics-engineering-jobs-SRCH_IL.0,5_IN115_KO6,30.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">26. Zeus Numerix</div><span class="badge badge-purple">Startup</span></td><td><div class="role-title">Simulation / R&D Engineer</div></td><td>Bengaluru</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#854F0B;font-weight:500;">72%</div><div class="match-bar"><div class="match-fill" style="width:72%;background:#EF9F27;"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-mechatronics-engineering-jobs-SRCH_IL.0,5_IN115_KO6,30.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">27. Milacron India</div><span class="badge badge-teal">Mfg</span></td><td><div class="role-title">Graduate Engineer Trainee</div></td><td>Bengaluru</td><td>₹3.5–4.5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">78%</div><div class="match-bar"><div class="match-fill" style="width:78%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-graduate-engineer-trainee-l-bengaluru,-karnataka-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">28. SKF India</div><span class="badge badge-blue">MNC</span></td><td><div class="role-title">Engineering Trainee – Mechatronics</div></td><td>Bengaluru / Coimbatore</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#854F0B;font-weight:500;">75%</div><div class="match-bar"><div class="match-fill" style="width:75%;background:#EF9F27;"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.skf.com/in/en/our-company/sustainability/people/working-at-skf/job-openings" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">29. Rolls-Royce India</div><span class="badge badge-blue">MNC</span></td><td><div class="role-title">Graduate Engineer (Mech/Mechatronics)</div></td><td>Bengaluru</td><td>₹5–7 LPA</td><td><div style="font-size:12px;color:#854F0B;font-weight:500;">68%</div><div class="match-bar"><div class="match-fill" style="width:68%;background:#EF9F27;"></div></div></td><td><span class="difficulty-hard">Hard</span></td><td><a class="apply-btn" href="https://careers.rolls-royce.com" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">30. Micron Technology</div><span class="badge badge-blue">MNC</span></td><td><div class="role-title">Manufacturing Engineering Trainee</div></td><td>Bengaluru</td><td>₹4.5–6 LPA</td><td><div style="font-size:12px;color:#854F0B;font-weight:500;">70%</div><div class="match-bar"><div class="match-fill" style="width:70%;background:#EF9F27;"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.micron.com/careers" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">31. GEA Group India</div><span class="badge badge-blue">MNC</span></td><td><div class="role-title">Associate Mechanical Design Engineer</div></td><td>Bengaluru</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">79%</div><div class="match-bar"><div class="match-fill" style="width:79%"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.gea.com/en/careers/" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">32. Matrix Solutions</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">Fresher Mechanical Engineer GET</div></td><td>Bengaluru</td><td>₹3–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">82%</div><div class="match-bar"><div class="match-fill" style="width:82%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-graduate-engineer-trainee-mechanical-l-bommasandra,-bengaluru,-karnataka-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">33. ShobhaGlobs Engineers Hub</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">GET – Production Engineering</div></td><td>Bengaluru</td><td>₹3–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">80%</div><div class="match-bar"><div class="match-fill" style="width:80%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-graduate-engineer-trainee-l-bengaluru,-karnataka-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">34. Hindiko Solution India</div><span class="badge badge-teal">Mfg</span></td><td><div class="role-title">Mechatronics Technician</div></td><td>Chennai</td><td>₹3.4–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">83%</div><div class="match-bar"><div class="match-fill" style="width:83%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">35. Qtek Mechatronics</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">Junior Mechatronics Engineer</div></td><td>Chennai</td><td>₹3.5–4.5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">87%</div><div class="match-bar"><div class="match-fill" style="width:87%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">36. Posh Automats</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">Automation / Robotics Trainee</div></td><td>Chennai</td><td>₹3–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">85%</div><div class="match-bar"><div class="match-fill" style="width:85%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/chennai-mechatronics-engineer-jobs-SRCH_IL.0,7_IC2833209_KO8,29.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">37. YALI Mobility</div><span class="badge badge-purple">EV Startup</span></td><td><div class="role-title">Mechatronics / EV Engineer</div></td><td>Chennai</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">80%</div><div class="match-bar"><div class="match-fill" style="width:80%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/chennai-mechatronics-engineer-jobs-SRCH_IL.0,7_IC2833209_KO8,29.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">38. Hya Tech Pvt Ltd</div><span class="badge badge-purple">SME</span></td><td><div class="role-title">Junior Robotics Engineer</div></td><td>Chennai / Coimbatore</td><td>₹3–4.5 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">88%</div><div class="match-bar"><div class="match-fill" style="width:88%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">39. Anok Media (PCB Design)</div><span class="badge badge-purple">Startup</span></td><td><div class="role-title">PCB Design Intern → Full Time</div></td><td>Bengaluru</td><td>₹2.4–4.8 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">76%</div><div class="match-bar"><div class="match-fill" style="width:76%"></div></div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">40. XSub Technologies</div><span class="badge badge-purple">Defence</span></td><td><div class="role-title">Embedded Electronics Engineer</div></td><td>Chennai</td><td>₹4–6 LPA</td><td><div style="font-size:12px;color:#3B6D11;font-weight:500;">82%</div><div class="match-bar"><div class="match-fill" style="width:82%"></div></div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs/" target="_blank">Apply ↗</a></td></tr>
+      <tr style="background:var(--color-background-secondary);">
+        <td colspan="7" style="font-size:11px;font-weight:500;color:#5F5E5A;padding:6px 8px;letter-spacing:0.04em;">🌐 ADDITIONAL OPENINGS — CAD / Design / Manufacturing</td>
+      </tr>
+      <tr><td><div class="company-name">41. Shanmuga Precision Forging</div><span class="badge badge-teal">Mfg</span></td><td>Quality/Manufacturing Engineer</td><td>Tamil Nadu</td><td>₹3.5 LPA</td><td><div style="font-size:12px;color:#3B6D11;">85%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.naukri.com" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">42. Electroingenum (Bengaluru)</div><span class="badge badge-purple">Startup</span></td><td>Power Electronics / Embedded</td><td>Bengaluru</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;">80%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs-in-bangalore/" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">43. Frido (R&D GET)</div><span class="badge badge-purple">Startup</span></td><td>GET Mechatronics – R&D</td><td>Any (Remote eligible)</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;">86%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs/" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">44. SAC Engine Components</div><span class="badge badge-teal">Mfg</span></td><td>GET – QA / Metrology / R&D</td><td>Tamil Nadu</td><td>₹3–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;">78%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.glassdoor.com/Job/tamil-nadu-graduate-engineer-trainee-jobs-SRCH_IL.0,10_IS4953_KO11,36.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">45. Tata Motors</div><span class="badge badge-teal">Auto</span></td><td>Graduate Engineer Trainee</td><td>Hosur / Pune</td><td>₹4–5.5 LPA</td><td><div style="font-size:12px;color:#854F0B;">73%</div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.tatamotors.com/people/career.php" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">46. Siddhan Intelligence</div><span class="badge badge-purple">Startup</span></td><td>Project Mgmt Trainee / Cloud</td><td>Chennai</td><td>₹3.5 LPA</td><td><div style="font-size:12px;color:#854F0B;">65%</div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/tamil-nadu-design-engineer-fresher-jobs-SRCH_IL.0,10_IS4953_KO11,34.htm" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">47. Lucas TVS</div><span class="badge badge-teal">Auto</span></td><td>Graduate Engineer Trainee</td><td>Chennai / Mysuru</td><td>₹3.5–4.5 LPA</td><td><div style="font-size:12px;color:#3B6D11;">82%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://careers.tvsmotor.co.in" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">48. Hyundai Motor India</div><span class="badge badge-teal">Auto</span></td><td>Manufacturing GET</td><td>Chennai (Sriperumbudur)</td><td>₹4–5 LPA</td><td><div style="font-size:12px;color:#854F0B;">72%</div></td><td><span class="difficulty-medium">Medium</span></td><td><a class="apply-btn" href="https://www.hyundai.com/in/en/careers" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">49. Reva Phoenix Labs</div><span class="badge badge-teal">Cal Lab</span></td><td>Calibration Engineer (Fresher)</td><td>Tamil Nadu</td><td>₹3.5–4 LPA</td><td><div style="font-size:12px;color:#3B6D11;">79%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply ↗</a></td></tr>
+      <tr><td><div class="company-name">50. Ojas Automation Systems</div><span class="badge badge-purple">SME</span></td><td>PLC Automation Engineer</td><td>Coimbatore</td><td>₹3.5–5 LPA</td><td><div style="font-size:12px;color:#3B6D11;">83%</div></td><td><span class="difficulty-easy">Easy</span></td><td><a class="apply-btn" href="https://www.naukri.com/automation-jobs-in-coimbatore" target="_blank">Apply ↗</a></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div id="companies" class="section">
+  <div class="grid2">
+    <div class="card">
+      <div style="font-size:11px;font-weight:500;color:#185FA5;margin-bottom:8px;">MNCs — Highest Brand Value</div>
+      <div style="font-size:13px;line-height:2;">L&T Technology Services • Siemens India • Bosch India • ABB India • Honeywell • Schneider Electric • SKF India • Rolls-Royce India • Micron • GEA Group • Valeo India • Toyota Kirloskar</div>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:500;color:#0F6E56;margin-bottom:8px;">Automotive — Bulk Hiring</div>
+      <div style="font-size:13px;line-height:2;">TVS Motor Co. • Tata Motors • Lucas TVS • Hyundai Motor India • Titan Company • Toyota Kirloskar • YALI Mobility • Preusse Powertrain • Valeo</div>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:500;color:#3C3489;margin-bottom:8px;">Startups — Fast Growth, Easy Entry</div>
+      <div style="font-size:13px;line-height:2;">Svaya Robotics • Edall Systems • Pumo Technovation • Convergix Automation • Crestclimber • Zenjade • CONSYST • Hya Tech • Zeus Numerix • Frido R&D • XSub</div>
+    </div>
+    <div class="card">
+      <div style="font-size:11px;font-weight:500;color:#854F0B;margin-bottom:8px;">Manufacturing SMEs — High Acceptance</div>
+      <div style="font-size:13px;line-height:2;">Shanmuga Precision • AADITYA Mechatronics • Matrix Solutions • Seetharam Mechatronics • Qtek Mechatronics • Posh Automats • Autotek Systems • Ojas Automation</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">Why you match — your key differentiators</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;">
+      <div style="font-size:13px;padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);"><span style="font-weight:500;">3 internships</span><br><span style="color:var(--color-text-secondary);font-size:12px;">BHEL + Code Bind + Shanmuga — huge differentiator for freshers</span></div>
+      <div style="font-size:13px;padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);"><span style="font-weight:500;">Robotics projects</span><br><span style="color:var(--color-text-secondary);font-size:12px;">Pipeline robot + line follower + 3-DOF arm = strong portfolio</span></div>
+      <div style="font-size:13px;padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);"><span style="font-weight:500;">Dual CAD proficiency</span><br><span style="color:var(--color-text-secondary);font-size:12px;">SolidWorks + Creo — most employers ask for at least one</span></div>
+      <div style="font-size:13px;padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);"><span style="font-weight:500;">STM32 + Arduino</span><br><span style="color:var(--color-text-secondary);font-size:12px;">Real embedded MCU work = rare for freshers</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="keywords" class="section">
+  <div class="card">
+    <h3 style="margin-bottom:0.5rem;">LinkedIn search keywords</h3>
+    <div class="tag-row">
+      <span class="keyword-chip">Mechatronics Engineer Fresher</span>
+      <span class="keyword-chip">GET Mechatronics 2026</span>
+      <span class="keyword-chip">Embedded Systems Engineer Chennai</span>
+      <span class="keyword-chip">Robotics Engineer Fresher Bengaluru</span>
+      <span class="keyword-chip">Automation Engineer Fresher Tamil Nadu</span>
+      <span class="keyword-chip">CAD Design Engineer Fresher</span>
+      <span class="keyword-chip">IoT Engineer Entry Level</span>
+      <span class="keyword-chip">Graduate Engineer Trainee Hosur</span>
+      <span class="keyword-chip">Manufacturing Engineer Fresher</span>
+      <span class="keyword-chip">Product Design Engineer 2026 Batch</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:0.5rem;">Naukri search keywords</h3>
+    <div class="tag-row">
+      <span class="keyword-chip">Mechatronics Fresher</span>
+      <span class="keyword-chip">Embedded C Fresher Chennai</span>
+      <span class="keyword-chip">SolidWorks Fresher Engineer</span>
+      <span class="keyword-chip">Arduino Sensor Integration</span>
+      <span class="keyword-chip">PLC Automation Fresher Coimbatore</span>
+      <span class="keyword-chip">GET Mechanical Mechatronics</span>
+      <span class="keyword-chip">MATLAB Engineer Fresher</span>
+      <span class="keyword-chip">Robotics Embedded Bengaluru</span>
+      <span class="keyword-chip">3D Printing Engineer</span>
+      <span class="keyword-chip">Graduate Apprentice Trainee Hosur</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:0.5rem;">ATS resume keywords — add these to your resume</h3>
+    <div class="tag-row">
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Mechatronics Engineering</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Embedded Systems</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">SolidWorks</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Creo Parametric</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Arduino</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">STM32 HAL</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">MATLAB Simulink</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Sensor Integration</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">IoT</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">PLC Programming</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">3D Printing / FDM</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Robotics</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">C Programming</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">C++ Programming</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Automation Studio</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">ESP32</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Servo Motor Control</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Motor Control</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">IR Sensor</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Industrial Safety</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">CNC / VMC</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Hydraulic Forging</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">Quality Inspection</span>
+      <span class="keyword-chip" style="background:#E1F5EE;color:#0F6E56;">BHEL Intern</span>
+    </div>
+    <p style="font-size:12px;color:var(--color-text-secondary);margin-top:8px;">Add these naturally in your experience bullets and skills section. ATS systems scan for exact keyword matches.</p>
+  </div>
+</div>
+
+<div id="templates" class="section">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <h3>LinkedIn recruiter outreach message</h3>
+      <button class="copy-btn" onclick="copyText('linkedin-msg')">Copy</button>
+    </div>
+    <textarea id="linkedin-msg" rows="6" readonly>Hi [Name], I came across your profile as a recruiter at [Company]. I'm a 2026 Mechatronics Engineering graduate from SASTRA University with hands-on experience in embedded systems (Arduino, STM32), CAD (SolidWorks, Creo), and robotics — backed by internships at BHEL and industry exposure in automation. I'm actively targeting [role/city] opportunities and believe my profile aligns well with your team's needs. Could you share any active openings or forward my profile to the relevant hiring team? Thank you!</textarea>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <h3>Cold email to HR — for GET / Fresher roles</h3>
+      <button class="copy-btn" onclick="copyText('cold-email')">Copy</button>
+    </div>
+    <textarea id="cold-email" rows="10" readonly>Subject: Application – Mechatronics/Embedded Systems Fresher | 2026 Batch | [Your Name]
+
+Dear Hiring Team,
+
+I am a 2026 B.Tech Mechatronics Engineering graduate from SASTRA Deemed University, Thanjavur, writing to express my interest in Graduate Engineer Trainee or entry-level embedded/robotics roles at [Company Name].
+
+My key strengths:
+• Embedded systems: Arduino, STM32, ESP32, C/C++, sensor integration
+• CAD: SolidWorks, Creo — 3D modeling, FDM prototyping
+• Automation: PLC programming, MATLAB/Simulink
+• Internships: BHEL (power manufacturing), Code Bind (IoT/embedded), Shanmuga Precision Forging (CNC/VMC)
+• Projects: Pipeline inspection robot, 3-DOF robotic arm, line-follower robot
+
+I am open to positions in Chennai, Bengaluru, Hosur, and Coimbatore. Please find my resume attached.
+
+Thank you for your time.
+Warm regards,
+Deebishaa S | deebishaa07@gmail.com | +91 9843414377</textarea>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <h3>Naukri / LinkedIn headline (copy to your profile)</h3>
+      <button class="copy-btn" onclick="copyText('headline')">Copy</button>
+    </div>
+    <textarea id="headline" rows="3" readonly>Mechatronics Engineer | Embedded Systems (Arduino, STM32) | CAD (SolidWorks, Creo) | Robotics | IoT | 2026 Fresher | BHEL Intern | Open to Roles in Chennai, Bengaluru, Hosur, Coimbatore</textarea>
+  </div>
+</div>
+
+<div id="plan" class="section">
+  <div class="grid2" style="margin-bottom:1rem;">
+    <div class="metric"><div class="metric-label">Daily application target</div><div class="metric-value">8–10 jobs</div></div>
+    <div class="metric"><div class="metric-label">Best time to apply</div><div class="metric-value">Tue–Thu 9–11 AM</div></div>
+    <div class="metric"><div class="metric-label">Cold emails/week</div><div class="metric-value">5 targeted</div></div>
+    <div class="metric"><div class="metric-label">LinkedIn connects/day</div><div class="metric-value">10 recruiters</div></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">Top 15 jobs to apply for first — ranked</h3>
+    <div class="action-step"><div class="step-num">1</div><div><div style="font-size:13px;font-weight:500;">L&T Technology Services – GET</div><div style="font-size:12px;color:var(--color-text-secondary);">Best brand, ₹4 LPA, 2026 batch, Mechatronics eligible — apply at ltts.com/careers</div></div></div>
+    <div class="action-step"><div class="step-num">2</div><div><div style="font-size:13px;font-weight:500;">TVS Motor Company – Graduate Apprentice Trainee</div><div style="font-size:12px;color:var(--color-text-secondary);">Hosur, bulk hiring, Mechatronics welcome — careers.tvsmotor.co.in</div></div></div>
+    <div class="action-step"><div class="step-num">3</div><div><div style="font-size:13px;font-weight:500;">Svaya Robotics – Robotics Engineer (Fresher)</div><div style="font-size:12px;color:var(--color-text-secondary);">Bengaluru startup, perfect skill match, active listing on Glassdoor</div></div></div>
+    <div class="action-step"><div class="step-num">4</div><div><div style="font-size:13px;font-weight:500;">Siemens – Graduate Trainee Engineer</div><div style="font-size:12px;color:var(--color-text-secondary);">₹6–10 LPA, Bengaluru, apply via jobs.siemens.com</div></div></div>
+    <div class="action-step"><div class="step-num">5</div><div><div style="font-size:13px;font-weight:500;">Cloudkampus – Embedded Engineer (2026 Batch)</div><div style="font-size:12px;color:var(--color-text-secondary);">Chennai, Mechatronics eligible, on Indeed right now</div></div></div>
+    <div class="action-step"><div class="step-num">6</div><div><div style="font-size:13px;font-weight:500;">ARKMINDS Infotech – Mechatronics Fresher</div><div style="font-size:12px;color:var(--color-text-secondary);">Chennai, 2022–2026 batch, directly matching your profile</div></div></div>
+    <div class="action-step"><div class="step-num">7</div><div><div style="font-size:13px;font-weight:500;">Titan Company – Engineer 1 Mechanical Assembly</div><div style="font-size:12px;color:var(--color-text-secondary);">Hosur, reputed brand, Tata group, stable career</div></div></div>
+    <div class="action-step"><div class="step-num">8</div><div><div style="font-size:13px;font-weight:500;">Surinova Pvt Ltd – Jr. Robotics Engineer</div><div style="font-size:12px;color:var(--color-text-secondary);">₹3.5–4.2 LPA, Chennai, ARM MCU + sensor work</div></div></div>
+    <div class="action-step"><div class="step-num">9</div><div><div style="font-size:13px;font-weight:500;">Ojas Automation – PLC Automation Engineer</div><div style="font-size:12px;color:var(--color-text-secondary);">Coimbatore (your home region!), good match for PLC skills</div></div></div>
+    <div class="action-step"><div class="step-num">10</div><div><div style="font-size:13px;font-weight:500;">Zenjade Automation – Fresher Engineer</div><div style="font-size:12px;color:var(--color-text-secondary);">Chennai, Mechatronics preferred, on Glassdoor actively</div></div></div>
+    <div class="action-step"><div class="step-num">11</div><div><div style="font-size:13px;font-weight:500;">Qtek Mechatronics – Jr. Mechatronics Engineer</div><div style="font-size:12px;color:var(--color-text-secondary);">Chennai, SME with direct mechatronics focus</div></div></div>
+    <div class="action-step"><div class="step-num">12</div><div><div style="font-size:13px;font-weight:500;">XSub Technologies – Embedded Electronics</div><div style="font-size:12px;color:var(--color-text-secondary);">Chennai, defence/robotics, exciting domain, ₹4–6 LPA</div></div></div>
+    <div class="action-step"><div class="step-num">13</div><div><div style="font-size:13px;font-weight:500;">Crestclimber Software – IoT/Robotics Engineer</div><div style="font-size:12px;color:var(--color-text-secondary);">Chennai/Bengaluru, strong IoT + embedded match</div></div></div>
+    <div class="action-step"><div class="step-num">14</div><div><div style="font-size:13px;font-weight:500;">Preusse Powertrain – Jr. Design Engineer (Creo)</div><div style="font-size:12px;color:var(--color-text-secondary);">Bengaluru, Creo + AutoCAD, automotive domain</div></div></div>
+    <div class="action-step"><div class="step-num">15</div><div><div style="font-size:13px;font-weight:500;">Bosch India – GET Engineering & Technology</div><div style="font-size:12px;color:var(--color-text-secondary);">Bengaluru/Chennai, ₹4–5.5 LPA, strong brand for career growth</div></div></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">30-day sprint plan</h3>
+    <div class="action-step"><div class="step-num" style="background:#E1F5EE;color:#0F6E56;">W1</div><div><div style="font-size:13px;font-weight:500;">Prep week — optimize resume + profiles</div><div style="font-size:12px;color:var(--color-text-secondary);">Add all ATS keywords to your resume. Update LinkedIn headline (copy from Templates tab). Set up Naukri profile. Create a job tracker spreadsheet.</div></div></div>
+    <div class="action-step"><div class="step-num" style="background:#E1F5EE;color:#0F6E56;">W2</div><div><div style="font-size:13px;font-weight:500;">Apply to top 15 priority roles</div><div style="font-size:12px;color:var(--color-text-secondary);">8–10 applications/day. Apply directly on company career pages (not just aggregators). Tuesday–Thursday mornings get the most recruiter attention.</div></div></div>
+    <div class="action-step"><div class="step-num" style="background:#E1F5EE;color:#0F6E56;">W3</div><div><div style="font-size:13px;font-weight:500;">Cold email + LinkedIn outreach</div><div style="font-size:12px;color:var(--color-text-secondary);">Send 5 personalised cold emails/week to HRs of target companies. Connect with 10 recruiters/day on LinkedIn using the template from the Templates tab.</div></div></div>
+    <div class="action-step"><div class="step-num" style="background:#E1F5EE;color:#0F6E56;">W4</div><div><div style="font-size:13px;font-weight:500;">Follow up + interview prep</div><div style="font-size:12px;color:var(--color-text-secondary);">Follow up on all applications. Prepare: embedded C basics, CAD theory, BHEL internship talking points, robot project explanations. Practice STAR-format answers.</div></div></div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:0.75rem;">Interview improvement tips</h3>
+    <div style="font-size:13px;line-height:2;color:var(--color-text-primary);">
+      ✅ Always lead with your 3 internships — this is your biggest edge as a fresher<br>
+      ✅ Be ready to explain your pipeline robot and 3-DOF arm technically<br>
+      ✅ Mention STM32 HAL libraries — shows depth beyond basic Arduino<br>
+      ✅ Say "BHEL" prominently — it's a very recognisable brand for interviewers<br>
+      ⚠️ Be honest about CGPA (6.17) — offset it with project and internship depth<br>
+      ⚠️ Avoid applying to pure software/IT roles — lack of match will waste your time<br>
+      📚 Before interviews: revise basic electronics, DC motors, sensors, C pointers
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function copyText(id) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.value).then(() => {
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+</script>
+
+</body>
+</html>

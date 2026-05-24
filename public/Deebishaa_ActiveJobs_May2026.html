@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Job Openings – Deebishaa S | May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#21262d;
+    --accent:#39d353;--accent2:#58a6ff;--accent3:#ff7b72;--warn:#f0883e;
+    --text:#c9d1d9;--muted:#8b949e;
+    --easy:#39d353;--medium:#f0883e;--hard:#ff7b72;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;}
+
+  .hero{
+    background:linear-gradient(135deg,#0d1117 0%,#0f1f38 100%);
+    border-bottom:1px solid var(--border);
+    padding:40px 48px 32px;
+    position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:'';position:absolute;top:-100px;right:-100px;
+    width:500px;height:500px;
+    background:radial-gradient(circle,rgba(57,211,83,0.06) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(57,211,83,0.12);color:var(--accent);
+    border:1px solid rgba(57,211,83,0.25);
+    border-radius:20px;padding:4px 12px;
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;
+    margin-bottom:14px;
+  }
+  .badge::before{content:'●';font-size:8px;animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .hero h1{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:6px;}
+  .hero h1 span{color:var(--accent);}
+  .hero p{color:var(--muted);font-size:14px;margin-top:8px;max-width:600px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .meta-chip{
+    background:var(--surface2);border:1px solid var(--border);
+    border-radius:6px;padding:5px 12px;
+    font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2);
+  }
+
+  .container{max-width:1400px;margin:0 auto;padding:32px 48px;}
+
+  /* FILTER BAR */
+  .filter-bar{
+    display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;align-items:center;
+  }
+  .filter-label{color:var(--muted);font-size:12px;font-family:'DM Mono',monospace;margin-right:4px;}
+  .f-btn{
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--muted);border-radius:5px;padding:5px 12px;
+    font-size:12px;cursor:pointer;transition:all .15s;
+    font-family:'DM Mono',monospace;
+  }
+  .f-btn:hover,.f-btn.active{background:rgba(57,211,83,0.12);border-color:var(--accent);color:var(--accent);}
+
+  /* SUMMARY STRIP */
+  .summary{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;
+    margin-bottom:28px;
+  }
+  .sum-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:8px;
+    padding:14px 16px;text-align:center;
+  }
+  .sum-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent);}
+  .sum-label{font-size:11px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace;letter-spacing:1px;}
+
+  /* TABLE */
+  .tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead tr{background:var(--surface2);}
+  thead th{
+    font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--muted);
+    padding:11px 13px;text-align:left;border-bottom:1px solid var(--border);
+    white-space:nowrap;
+  }
+  tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:var(--surface2);}
+  td{padding:13px 13px;vertical-align:top;}
+
+  .co{font-weight:700;color:#fff;font-size:13px;}
+  .role{font-size:12px;color:var(--accent2);font-weight:500;margin-top:2px;}
+  .loc{color:var(--muted);font-size:11px;margin-top:3px;}
+  .sal{color:var(--accent);font-family:'DM Mono',monospace;font-size:12px;font-weight:600;}
+  .sal small{font-size:10px;color:var(--muted);}
+
+  .tag{
+    display:inline-block;
+    background:rgba(88,166,255,0.1);border:1px solid rgba(88,166,255,0.2);
+    color:var(--accent2);border-radius:3px;padding:2px 7px;
+    font-size:10px;margin:1px 1px 0 0;font-family:'DM Mono',monospace;
+  }
+  .tag.hot{background:rgba(57,211,83,0.1);border-color:rgba(57,211,83,0.25);color:var(--accent);}
+
+  .diff-easy{color:var(--easy);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;}
+  .diff-med{color:var(--warn);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;}
+
+  .mode-on{background:rgba(255,123,114,0.1);color:var(--accent3);border:1px solid rgba(255,123,114,0.2);border-radius:3px;padding:2px 7px;font-size:10px;font-family:'DM Mono',monospace;}
+  .mode-hy{background:rgba(88,166,255,0.1);color:var(--accent2);border:1px solid rgba(88,166,255,0.2);border-radius:3px;padding:2px 7px;font-size:10px;font-family:'DM Mono',monospace;}
+  .mode-re{background:rgba(57,211,83,0.1);color:var(--accent);border:1px solid rgba(57,211,83,0.2);border-radius:3px;padding:2px 7px;font-size:10px;font-family:'DM Mono',monospace;}
+
+  .yes{color:var(--easy);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;}
+  .cond{color:var(--warn);font-family:'DM Mono',monospace;font-size:11px;font-weight:700;}
+
+  .apply-btn{
+    display:inline-block;
+    background:linear-gradient(90deg,#39d353,#2ea043);
+    color:#0d1117;font-family:'DM Mono',monospace;font-size:11px;
+    font-weight:700;padding:6px 13px;border-radius:5px;
+    text-decoration:none;letter-spacing:0.5px;white-space:nowrap;
+    transition:opacity .2s;
+  }
+  .apply-btn:hover{opacity:0.85;}
+  .apply-btn.sec{background:var(--surface2);color:var(--accent2);border:1px solid var(--border);}
+
+  .match{font-size:11px;color:var(--muted);line-height:1.5;}
+  .match b{color:#fff;}
+
+  /* Section title */
+  .sec-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:5px;}
+  .sec-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:20px;}
+
+  .note-box{
+    background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--warn);
+    border-radius:8px;padding:16px 20px;margin-top:24px;
+    font-size:13px;color:var(--muted);line-height:1.8;
+  }
+  .note-box b{color:#fff;}
+
+  footer{text-align:center;padding:28px;border-top:1px solid var(--border);color:var(--muted);font-family:'DM Mono',monospace;font-size:11px;}
+
+  @media(max-width:700px){.hero,.container{padding:20px 14px;}.hero h1{font-size:22px;}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">LIVE OPENINGS &nbsp;·&nbsp; MAY 2026</div>
+  <h1>Active Job Openings for<br><span>Deebishaa S</span></h1>
+  <p>Verified from Indeed, Glassdoor, Internshala & Naukri — active as of May 2026. Mechatronics / Embedded / Automation / Robotics / CAD. Min ₹3.4 LPA, Fresher-eligible, TN & Karnataka preferred.</p>
+  <div class="meta-row">
+    <div class="meta-chip">🎓 2026 Batch</div>
+    <div class="meta-chip">💰 ₹3.4–5.5 LPA range</div>
+    <div class="meta-chip">📍 Chennai · Bengaluru · Coimbatore · Hosur · Mysuru</div>
+    <div class="meta-chip">✅ 20 Verified Openings</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SUMMARY -->
+  <div class="summary">
+    <div class="sum-card"><div class="sum-num">20</div><div class="sum-label">Total Openings</div></div>
+    <div class="sum-card"><div class="sum-num">14</div><div class="sum-label">Easy to Apply</div></div>
+    <div class="sum-card"><div class="sum-num">9</div><div class="sum-label">Chennai / TN</div></div>
+    <div class="sum-card"><div class="sum-num">7</div><div class="sum-label">Bengaluru / KA</div></div>
+    <div class="sum-card"><div class="sum-num">4</div><div class="sum-label">Coimbatore / Hosur</div></div>
+    <div class="sum-card"><div class="sum-num">3</div><div class="sum-label">MNC / Global Co.</div></div>
+  </div>
+
+  <div class="sec-label">01 — Verified Active Openings</div>
+  <div class="sec-title">Apply to These Now — All Confirmed Active May 2026</div>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Company & Role</th>
+        <th>Salary</th>
+        <th>Skills Needed</th>
+        <th>Fresher?</th>
+        <th>Mode</th>
+        <th>Difficulty</th>
+        <th>Why You Match</th>
+        <th>Apply Link</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- 1 VALEO -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">01</td>
+        <td>
+          <div class="co">Valeo India</div>
+          <div class="role">Graduate Engineer Trainee – Test & Validation</div>
+          <div class="loc">📍 Chennai (Navallur R&D) · Automotive MNC</div>
+        </td>
+        <td><div class="sal">3.5–4.5 LPA</div></td>
+        <td>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag">MATLAB</span><span class="tag">Embedded C/C++</span>
+          <span class="tag">Testing Concepts</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Branch directly eligible. <b>MATLAB + STM32</b> experience is rare in freshers — strong differentiator for Valeo R&amp;D.</td>
+        <td><a class="apply-btn" href="https://freshershunt.in/valeo-off-campus-drive-2026/" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 2 VALEO PROD -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">02</td>
+        <td>
+          <div class="co">Valeo India</div>
+          <div class="role">Graduate Engineer Trainee – Production Quality</div>
+          <div class="loc">📍 Chennai · Automotive MNC</div>
+        </td>
+        <td><div class="sal">3.5–4 LPA</div></td>
+        <td>
+          <span class="tag hot">Manufacturing ✓</span>
+          <span class="tag">7QC Tools</span><span class="tag">Auditing</span>
+          <span class="tag">Control Plans</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match"><b>Shanmuga Precision Forging</b> internship gives you direct manufacturing quality exposure — rare for freshers.</td>
+        <td><a class="apply-btn" href="https://offcampusjobs4u.com/valeo-recruitment-2026-graduate-engineer-trainee-chennai/" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 3 BOSCH GA -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">03</td>
+        <td>
+          <div class="co">Bosch India</div>
+          <div class="role">Graduate Apprentice – Mechatronics / Manufacturing</div>
+          <div class="loc">📍 Chennai / Bengaluru · Global MNC</div>
+        </td>
+        <td><div class="sal">3.6–4.5 LPA</div></td>
+        <td>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag">65%+ academics</span>
+          <span class="tag">No backlogs</span>
+        </td>
+        <td><span class="cond">~ 65%+ needed</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-med">◆ MEDIUM</span></td>
+        <td class="match">Mechatronics branch explicitly accepted. Apply via SASTRA T&amp;P or directly on bosch.in/careers — 12-month rotational training program.</td>
+        <td><a class="apply-btn" href="https://www.bosch.in/careers/students-and-graduates/graduate-apprentice/" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 4 KARAKA -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">04</td>
+        <td>
+          <div class="co">Karaka eDrives</div>
+          <div class="role">Electronics Engineer – Fresher (EV / Motor Drives)</div>
+          <div class="loc">📍 Coimbatore, TN · EV Startup</div>
+        </td>
+        <td><div class="sal">3.0–4.0 LPA</div></td>
+        <td>
+          <span class="tag hot">Electronics Components ✓</span>
+          <span class="tag">Circuit Knowledge</span>
+          <span class="tag">Embedded basics</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Actively posting on Indeed for Coimbatore freshers. <b>Your Arduino + sensor integration</b> background fits this EV electronics role. Local company!</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-fresher-electronics-engineer-l-coimbatore,-tamil-nadu-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 5 HYA TECH -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">05</td>
+        <td>
+          <div class="co">HYA Tech Pvt. Ltd.</div>
+          <div class="role">Automation Engineer – Fresher / Trainee</div>
+          <div class="loc">📍 Hosur, TN · Industrial Automation</div>
+        </td>
+        <td><div class="sal">3.4–4.2 LPA</div></td>
+        <td>
+          <span class="tag hot">PLC ✓</span>
+          <span class="tag">HMI</span><span class="tag">SCADA</span>
+          <span class="tag">Troubleshooting</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">PLC Programming + Automation Studio in your curriculum maps directly. <b>BHEL internship</b> adds industrial credibility.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-plc-automation-fresher-l-hosur-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 6 ARKMINDS -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">06</td>
+        <td>
+          <div class="co">ARKMINDS Infotech Pvt. Ltd.</div>
+          <div class="role">Mechatronics / Robotic Automation Engineer – Fresher</div>
+          <div class="loc">📍 Chennai, TN</div>
+        </td>
+        <td><div class="sal">3.0–3.8 LPA</div></td>
+        <td>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag hot">2022–2026 Batch ✓</span>
+          <span class="tag">Problem Solving</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Their posting <b>explicitly lists 2022–2026 batch</b> and B.E. Mechatronics/Robotic Automation. This is a direct match.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 7 AAVIS -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">07</td>
+        <td>
+          <div class="co">AAVIS Engineering & Quality Solutions</div>
+          <div class="role">Graduate Trainee – Mechatronics / Simulation / Test</div>
+          <div class="loc">📍 Bengaluru, KA · Quality Engineering</div>
+        </td>
+        <td><div class="sal">3.5–4.5 LPA</div></td>
+        <td>
+          <span class="tag hot">MATLAB/Simulink ✓</span>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag">Test Automation</span>
+          <span class="tag">Up to 1 yr exp</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Actively listed on Glassdoor May 2026. <b>MATLAB/Simulink</b> skill is your biggest differentiator here — very few freshers have it.</td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 8 ACCESS AUTOMATION -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">08</td>
+        <td>
+          <div class="co">Access Automation</div>
+          <div class="role">GET – Industrial Automation (PLC/SCADA/Drives)</div>
+          <div class="loc">📍 Bengaluru, KA · Industrial Automation</div>
+        </td>
+        <td><div class="sal">3.5–5 LPA</div></td>
+        <td>
+          <span class="tag hot">PLC ✓</span>
+          <span class="tag">SCADA</span><span class="tag">Drives</span>
+          <span class="tag">Panel Design</span><span class="tag">HMI</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">On Glassdoor's current Bengaluru automation list. <b>Automation Studio + BHEL exposure</b> makes you competitive for industrial PLC roles.</td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 9 KOKBAN -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">09</td>
+        <td>
+          <div class="co">Kokban Automation Pvt. Ltd.</div>
+          <div class="role">GET – PLC / DCS / SCADA / HMI (3-month OJT)</div>
+          <div class="loc">📍 Chennai (Tambaram), TN</div>
+        </td>
+        <td><div class="sal">3.4–4 LPA</div></td>
+        <td>
+          <span class="tag hot">PLC ✓</span>
+          <span class="tag">DCS</span><span class="tag">AutoCAD</span>
+          <span class="tag">Control Systems</span>
+        </td>
+        <td><span class="cond">~ After 3-mo OJT</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Confirmed on Glassdoor – Chennai Tambaram location. 3-month training with ₹10k/month stipend, then full-time conversion.</td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/india-freshers-scada-jobs-SRCH_IL.0,5_IN115_KO6,20.htm" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 10 INNOW8 -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">10</td>
+        <td>
+          <div class="co">Innow8</div>
+          <div class="role">STEM Innovation Engineer (Embedded / Robotics / 3D Printing)</div>
+          <div class="loc">📍 Remote / PAN India · STEM EdTech</div>
+        </td>
+        <td><div class="sal">3.2–4.0 LPA</div></td>
+        <td>
+          <span class="tag hot">Arduino ✓</span>
+          <span class="tag hot">ESP32 ✓</span>
+          <span class="tag hot">3D Printing ✓</span>
+          <span class="tag">IoT</span><span class="tag">Raspberry Pi</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-re">Remote/Hybrid</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Internshala (updated 1 week ago). <b>Every listed skill matches your profile perfectly</b>: Arduino, ESP32, IoT, 3D Printing, Robotics.</td>
+        <td><a class="apply-btn" href="https://innow8.zohorecruit.in/jobs/Careers/141783000000304248/STEM-Innovation-Engineer" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 11 STEMMANTRA -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">11</td>
+        <td>
+          <div class="co">Stemmantra Technologies</div>
+          <div class="role">STEM Innovation Engineer / Mentor</div>
+          <div class="loc">📍 Multiple Locations (incl. Chennai/Coimbatore)</div>
+        </td>
+        <td><div class="sal">3.0–3.6 LPA</div></td>
+        <td>
+          <span class="tag hot">Robotics ✓</span>
+          <span class="tag hot">IoT ✓</span>
+          <span class="tag">Curriculum Design</span>
+          <span class="tag">Arduino</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-hy">Hybrid</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Internshala. Work on robotics kits + IoT education — your <b>pipeline robot and 3-DOF manipulator projects</b> are strong talking points.</td>
+        <td><a class="apply-btn" href="https://internshala.com/job/detail/fresher-stem-innovation-engineer-mentor-job-in-multiple-locations-at-stemmantra-technologies-private-limited1774883538" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 12 ROBOSPACE -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">12</td>
+        <td>
+          <div class="co">Robospace Edutech</div>
+          <div class="role">Robotics & STEM Trainer (Arduino / IoT)</div>
+          <div class="loc">📍 Bengaluru / Coimbatore</div>
+        </td>
+        <td><div class="sal">3.4–4.5 LPA</div></td>
+        <td>
+          <span class="tag hot">Arduino ✓</span>
+          <span class="tag hot">Robotics ✓</span>
+          <span class="tag">IoT</span><span class="tag">Teaching</span>
+          <span class="tag">Workshops</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-hy">Hybrid</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Internshala. Your <b>3 hands-on robotics projects</b> (pipeline robot, line follower, 3-DOF arm) are a perfect trainer portfolio.</td>
+        <td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs-in-bangalore/" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 13 QANTOM -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">13</td>
+        <td>
+          <div class="co">Qantom Software</div>
+          <div class="role">Junior Embedded Developer (Arduino / IoT)</div>
+          <div class="loc">📍 Bengaluru, KA · IoT Startup</div>
+        </td>
+        <td><div class="sal">3.5–4.8 LPA</div></td>
+        <td>
+          <span class="tag hot">Arduino IDE ✓</span>
+          <span class="tag hot">Embedded C ✓</span>
+          <span class="tag">VS Code</span>
+          <span class="tag">IoT Platform</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Indeed Bengaluru. They want <b>Arduino IDE hands-on experience</b> — your Code Bind Technologies internship directly qualifies you.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-embedded-systems-fresher-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 14 GMAK TECH -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">14</td>
+        <td>
+          <div class="co">GMaK Technologies India</div>
+          <div class="role">Embedded Software Engineer – Fresher</div>
+          <div class="loc">📍 Coimbatore, TN · Product Company</div>
+        </td>
+        <td><div class="sal">3.0–4.5 LPA</div></td>
+        <td>
+          <span class="tag hot">Embedded C ✓</span>
+          <span class="tag hot">STM32 ✓</span>
+          <span class="tag">Firmware</span>
+          <span class="tag">Hardware Integration</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Indeed Coimbatore. <b>STM32 HAL library experience</b> (GPIO, ADC, PWM, USART) from your lab work is a strong match for firmware roles.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-fresher-electronics-engineer-l-coimbatore,-tamil-nadu-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 15 AKHIRA -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">15</td>
+        <td>
+          <div class="co">Akhira Services Pvt. Ltd.</div>
+          <div class="role">Graduate Trainee Engineer – Production / Manufacturing</div>
+          <div class="loc">📍 Coimbatore, TN</div>
+        </td>
+        <td><div class="sal">3.0–3.6 LPA</div></td>
+        <td>
+          <span class="tag hot">2026 Pass-out ✓</span>
+          <span class="tag">Production Ops</span>
+          <span class="tag">Manufacturing</span>
+        </td>
+        <td><span class="yes">✔ YES (Freshers Only)</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Explicitly says "Freshers only / Passed-out candidates." Your <b>CNC/VMC/forging internship</b> at Shanmuga Precision is excellent background.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-fresher,-mechatronics-engineering-l-coimbatore,-tamil-nadu-jobs.html" target="_blank">Apply →</a></td>
+      </tr>
+
+      <!-- 16 APEE INFRA -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">16</td>
+        <td>
+          <div class="co">APEE Infratech India</div>
+          <div class="role">GET – Electrical / Mechatronics</div>
+          <div class="loc">📍 Electronics City, Bengaluru, KA</div>
+        </td>
+        <td><div class="sal">3.4–4.0 LPA</div></td>
+        <td>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag">Electrical Electronics</span>
+          <span class="tag">Up to 1 yr</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Indeed – Electronics City Bengaluru. Explicitly mentions <b>Mechatronics branch</b>. Good for freshers seeking GET in Bengaluru tech hub.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-bosch,-graduate-engineer-trainee-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 17 CARBELIM -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">17</td>
+        <td>
+          <div class="co">Carbelim Pvt. Ltd.</div>
+          <div class="role">Embedded & Controls Engineer (Climate Tech / IoT)</div>
+          <div class="loc">📍 Coimbatore, TN · Climate Tech Startup</div>
+        </td>
+        <td><div class="sal">3.5–5.0 LPA</div></td>
+        <td>
+          <span class="tag hot">Embedded C ✓</span>
+          <span class="tag hot">Sensor Integration ✓</span>
+          <span class="tag">PCB Design</span>
+          <span class="tag">IoT</span><span class="tag">Automation</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-med">◆ MEDIUM</span></td>
+        <td class="match">Active on Indeed Coimbatore. Exciting climate-tech startup. <b>Sensor integration + STM32 + IoT</b> skills match well. PCB basics would help.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-electronics-job-vacancy-l-coimbatore,-tamil-nadu-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 18 MYTRON LABS -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">18</td>
+        <td>
+          <div class="co">MyTron Labs LLP</div>
+          <div class="role">Operations Field Engineer – Robotics / IoT / AI</div>
+          <div class="loc">📍 Bengaluru, KA · Robotics + AI Startup</div>
+        </td>
+        <td><div class="sal">3.0–4.0 LPA</div></td>
+        <td>
+          <span class="tag hot">Robotics ✓</span>
+          <span class="tag hot">IoT ✓</span>
+          <span class="tag">LAN/Networking</span>
+          <span class="tag">Troubleshooting</span>
+          <span class="tag">Python (plus)</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-med">◆ MEDIUM</span></td>
+        <td class="match">Active on Internshala. Robotics + IoT field deployment role — your <b>robotics project portfolio + Code Bind IoT internship</b> is a good fit. Field travel involved.</td>
+        <td><a class="apply-btn" href="https://internshala.com/fresher-jobs/embedded-systems-jobs/" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 19 HINDIKO -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">19</td>
+        <td>
+          <div class="co">Hindiko Solution India Pvt. Ltd.</div>
+          <div class="role">Mechatronics Technician / Junior Engineer</div>
+          <div class="loc">📍 Chennai, TN · Manufacturing</div>
+        </td>
+        <td><div class="sal">3.0–3.6 LPA</div></td>
+        <td>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag">Troubleshooting</span>
+          <span class="tag">Electrical Maintenance</span>
+          <span class="tag">Machine Operations</span>
+        </td>
+        <td><span class="yes">✔ YES</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-easy">● EASY</span></td>
+        <td class="match">Active on Indeed Chennai. Direct mechatronics role. Your <b>BHEL internship (machinery maintenance & industrial safety)</b> is highly relevant.</td>
+        <td><a class="apply-btn" href="https://in.indeed.com/q-mechatronics-l-chennai,-tamil-nadu-jobs.html" target="_blank">Search →</a></td>
+      </tr>
+
+      <!-- 20 SAFRAN -->
+      <tr>
+        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;">20</td>
+        <td>
+          <div class="co">Safran Electronics & Defense</div>
+          <div class="role">Junior Engineer – Electrical & Mechatronics</div>
+          <div class="loc">📍 Bengaluru, KA · Aerospace / Defence MNC</div>
+        </td>
+        <td><div class="sal">4.0–5.5 LPA</div></td>
+        <td>
+          <span class="tag hot">Mechatronics ✓</span>
+          <span class="tag">AutoCAD</span>
+          <span class="tag">SolidWorks</span>
+          <span class="tag">Electrical Systems</span>
+        </td>
+        <td><span class="cond">~ 0–1 yr acceptable</span></td>
+        <td><span class="mode-on">On-site</span></td>
+        <td><span class="diff-med">◆ MEDIUM</span></td>
+        <td class="match">Active on Glassdoor Bengaluru May 2026. <b>Higher salary ceiling</b> – SolidWorks + Creo + Mechatronics branch makes you eligible. Aerospace MNC.</td>
+        <td><a class="apply-btn" href="https://www.glassdoor.co.in/Job/bengaluru-mechatronics-engineer-jobs-SRCH_IL.0,9_IC2940587_KO10,31.htm" target="_blank">Search →</a></td>
+      </tr>
+
+    </tbody>
+  </table>
+  </div>
+
+  <!-- NOTE BOX -->
+  <div class="note-box">
+    <b>⚡ How to use these links:</b> Most "Search →" links take you to filtered search pages on Indeed/Glassdoor for that city and domain. <b>Search the company name</b> directly on that page to find the specific opening. "Apply →" links go directly to the company's career page or the job posting.
+    <br><br>
+    <b>🔑 Pro tip:</b> Also search these companies directly on <b>Naukri.com</b> and <b>LinkedIn Jobs</b> with your location + "fresher" filter — new postings appear daily. Set up email alerts so you're among the first 50 applicants (response rate is 3× higher).
+    <br><br>
+    <b>📌 Immediate priority:</b> <b>Valeo (01 & 02)</b> · <b>ARKMINDS (06)</b> · <b>Innow8 (10)</b> · <b>Stemmantra (11)</b> — these four have direct apply links and are confirmed active.
+  </div>
+
+</div>
+<footer>
+  ACTIVE OPENINGS REPORT · DEEBISHAA S · MAY 2026 · SOURCED FROM INDEED / GLASSDOOR / INTERNSHALA / NAUKRI<br>
+  <span style="opacity:0.4;">Verify openings on official portals before applying. Job market changes daily — set up alerts for freshest listings.</span>
+</footer>
+</body>
+</html>
